@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+
 
 export default function Quiz() {
   return (
-    <div>
-        <h1>Quiz Component</h1>
+    <div className='container'>
+      <h1 className='title text-light'>QuizBuzz</h1>
     </div>
   )
 }
