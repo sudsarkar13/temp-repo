@@ -1,4 +1,5 @@
 import React from 'react';
+import Questions from './Questions';
 
 
 export default function Quiz() {
@@ -17,7 +18,9 @@ export default function Quiz() {
       <h1 className='title text-light'>QuizBuzz</h1>
 
       {/* Display Questions */}
+      <Questions />
 
+      {/* Display Previous and Next buttons */}
       <div className='grid'>
         <button className='btn prev' onClick={onPrev}>Previous</button>
         <button className='btn next' onClick={onNext}>Next</button>
