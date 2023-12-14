@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 export default function Questions() {
 
-    const [ checked, setchecked ] = useState(undefined)
+    const [ checked, setChecked ] = useState(undefined)
 
     function onSelect() {
-        setchecked(true)
+        setChecked(false)
         console.log('radio button change')
     }
 
@@ -17,7 +17,23 @@ export default function Questions() {
         <ul>
             <li>
                 <input type='radio' name='options' value={checked} id='q1-option' onChange={onSelect} />
-                <label>Option 1</label>
+                <label className='text-primary' htmlFor='q1-option'>Option </label>
+                <div className='check checked'></div>
+            </li>
+            <li>
+                <input type='radio' name='options' value={checked} id='q1-option' onChange={onSelect} />
+                <label className='text-primary' htmlFor='q1-option'>Option </label>
+                <div className='check'></div>
+            </li>
+            <li>
+                <input type='radio' name='options' value={checked} id='q1-option' onChange={onSelect} />
+                <label className='text-primary' htmlFor='q1-option'>Option </label>
+                <div className='check'></div>
+            </li>
+            <li>
+                <input type='radio' name='options' value={checked} id='q1-option' onChange={onSelect} />
+                <label className='text-primary' htmlFor='q1-option'>Option </label>
+                <div className='check'></div>
             </li>
         </ul>
     </div>
