@@ -23,7 +23,7 @@ export default function Quiz() {
 
       {/* Display Previous and Next buttons */}
       <div className='grid'>
-        <button className='btn prev' onClick={onPrev}>Previous</button>
+        <button className='btn prev' onClick={onPrev}>Prev</button>
         <button className='btn next' onClick={onNext}>Next</button>
       </div>
     </div>
