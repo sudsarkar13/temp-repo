@@ -23,11 +23,22 @@
     display: flex;
     justify-content: center;
     margin-top: 4em;
+    flex-direction: column;
+    align-items: center;
 }
 
 #form .userid{
     padding: .7em 2em;
     width: 50%;
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+.password{
+    padding: .7em 2em;
+    width: 50%;
+    max-width: 500px;
     border: none;
     border-radius: 3px;
     font-size: 1em;

@@ -22,6 +22,8 @@ export default function Main() {
 
       <form id='form'>
         <input ref={inputRef} className='userid' type='text' placeholder='Username*' required></input>
+        <br />
+        <input ref={inputRef} className='password' type='password' placeholder='Password*' required></input>
       </form>
 
       <div className='start'>
