@@ -5,19 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.footer{
-  display: flex;
-  justify-content: center;
-  margin-top: 12.5em;
-  /* bottom: 0; */
-  padding-bottom: 2em;
-  color: aliceblue;
 }

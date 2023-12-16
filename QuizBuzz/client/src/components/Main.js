@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/Main.css'
+import '../styles/Main.css';
+import Footer from './footer';
 
 export default function Main() {
 
@@ -29,6 +30,7 @@ export default function Main() {
       <div className='start'>
         <Link className='btn' to='quiz'>Start Quiz</Link>
       </div>
+      <Footer/>
     </div>
   )
 }

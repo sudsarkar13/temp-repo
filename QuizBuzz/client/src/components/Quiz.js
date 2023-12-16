@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Main.css';
 import Questions from './Questions';
+import Footer from './footer';
 
 
 export default function Quiz() {
@@ -26,6 +27,7 @@ export default function Quiz() {
         <button className='btn prev' onClick={onPrev}>Prev</button>
         <button className='btn next' onClick={onNext}>Next</button>
       </div>
+      <Footer/>
     </div>
   )
 }

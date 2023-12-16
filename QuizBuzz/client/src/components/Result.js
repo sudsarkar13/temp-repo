@@ -1,10 +1,12 @@
 import React from 'react';
 import '../styles/Result.css'
 import { Link } from 'react-router-dom';
+import ResultTable from './ResultTable';
+import Footer from './footer';
 
 export default function Result() {
 
-  function onRestart(){
+  function onRestart() {
     console.log('on Restart');
   }
 
@@ -41,6 +43,10 @@ export default function Result() {
       <div className='start'>
         <Link className='btn' to={'/'} onClick={onRestart}>Restart</Link>
       </div>
+      <br />
+      {/* Result Table */}
+      <ResultTable />
+      <Footer />
     </div>
   )
 }
