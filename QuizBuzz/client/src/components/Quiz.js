@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Main.css';
 import Questions from './Questions';
 import Footer from './footer';
 
+// redux store import
+import { useSelector } from 'react-redux';
 
 export default function Quiz() {
+
+  const state = useSelector(state => state)
+
+  useEffect(() => {
+    console.log(state)
+  })
 
   // Previous button event handler
   function onPrev() {
@@ -27,7 +35,7 @@ export default function Quiz() {
         <button className='btn prev' onClick={onPrev}>Prev</button>
         <button className='btn next' onClick={onNext}>Next</button>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
