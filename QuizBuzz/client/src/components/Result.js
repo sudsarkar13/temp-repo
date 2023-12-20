@@ -2,7 +2,6 @@ import React from 'react';
 import '../styles/Result.css'
 import { Link } from 'react-router-dom';
 import ResultTable from './ResultTable';
-import Footer from './footer';
 
 export default function Result() {
 
@@ -46,7 +45,6 @@ export default function Result() {
       <br />
       {/* Result Table */}
       <ResultTable />
-      <Footer />
     </div>
   )
 }
