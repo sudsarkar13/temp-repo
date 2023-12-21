@@ -40,6 +40,7 @@ export default function Quiz() {
         }
     }
 
+    // option selector event handler
     function onChecked(check){
         setChecked(check)
     }

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Main.css';
 import Questions from './Questions';
+import { PushAnswer } from '../hooks/setResult';
 
 import { MoveNextQuestion, MovePrevQuestion } from '../hooks/FetchQuestion';
 
@@ -10,11 +11,12 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function Quiz() {
 
   // const trace = useSelector(state => state.questions.trace);
+  const { check, setchecked } = useState(undefined);
   const { queue, trace } = useSelector(state => state.questions);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(queue)
+    // console.log(queue)
   })
 
   // Previous button event handler
@@ -27,11 +29,21 @@ export default function Quiz() {
   }
   // Next button event handler
   function onNext() {
-    console.log('On next click')
+    // console.log('On next click')
     if (trace < queue.length) {
       // update the trace value by one using moveNextAction
       dispatch(MoveNextQuestion());
+      dispatch(PushAnswer(check))
     }
+  }
+
+  // reset the value of the checked variable
+  setchecked(undefined)
+
+  // Option seletor event handler
+  function onChecked(check) {
+    console.log(check)
+    setchecked(check)
   }
 
   return (
@@ -39,7 +51,7 @@ export default function Quiz() {
       <h1 className='title text-light'>QuizBuzz</h1>
 
       {/* Display Questions */}
-      <Questions />
+      <Questions onChecked={onChecked} />
 
       {/* Display Previous and Next buttons */}
       <div className='grid'>
