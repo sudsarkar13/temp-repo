@@ -18,11 +18,10 @@ const Nav = ({ openNav }: Props) => {
 				<div className='nav-link uppercase'>Home</div>
 				<div className='nav-link uppercase'>About</div>
 				<div className='nav-link uppercase'>Services</div>
-				<div className='nav-link uppercase'>Projects</div>
-				<div className='nav-link uppercase'>Blog</div>
+				<div className='nav-link uppercase'>Shop</div>
 				<div className='nav-link uppercase'>Contact</div>
 				<div onClick={openNav}>
-					<Bars3Icon className='w-[2rem] md:hidden h-[2rem]w cursor-pointer text-white font-extrabold' />
+					<Bars3Icon className='w-[2rem] md:hidden h-[2rem]w cursor-pointer text-red-900 font-[1500]' />
 				</div>
 			</div>
 		</div>
