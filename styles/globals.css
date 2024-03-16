@@ -39,7 +39,7 @@
 	}
 
   .hero {
-    @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[#7F1D1D];
+    @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[#7F1D1D] bg-cover bg-center;
   }
 
   .slider-container {
@@ -55,6 +55,10 @@
   }
   
   @media (max-width: 1024px) {
+    .hero {
+      @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[url('/websiteImages/BgImage.png')] bg-cover bg-center;
+    }
+
     .slider-container {
       @apply w-auto h-[300px] mx-auto object-center;
     }
