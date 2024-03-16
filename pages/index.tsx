@@ -9,7 +9,7 @@ const HomePage = () => {
 	const closeNav = () => setNav(false);
 
 	return (
-		<div className='overflow-x-hidden bg-red-900 bg-cover'>
+		<div className='overflow-x-hidde'>
 			<Head>
 				<title>Maa Tarini Electrical</title>
 			</Head>
