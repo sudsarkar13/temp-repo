@@ -38,5 +38,34 @@
 		@apply relative mb-[2rem] font-semibold text-red-900 cursor-pointer text-[22px] w-fit md:block after:block after:content-[''] after:absolute after:h-[3px] after:bg-[#A03000] after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center;
 	}
 
+  .hero {
+    @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[#7F1D1D];
+  }
+
+  .slider-container {
+    @apply w-[1500px] h-[500px] mx-auto;
+  }
+  
+  .slider {
+    @apply w-[100%] h-[400px] mt-[0.5rem] items-center justify-center;
+  }
+  
+  .slider img {
+    @apply w-[100%] h-[100%];
+  }
+  
+  @media (max-width: 1024px) {
+    .slider-container {
+      @apply w-auto h-[300px] mx-auto;
+    }
+  
+    .slider {
+      @apply  w-[100%] h-auto mt-[0.5rem] object-contain items-center justify-center;
+    }
+  
+    .slider img {
+      @apply w-auto h-auto items-center justify-center object-contain;
+    }
+  }
   
 }
