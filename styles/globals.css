@@ -17,7 +17,7 @@
     @apply mx-auto mt-[0.5rem] p-[2rem] w-[1rem] h-[1rem] cursor-pointer;
   }
   .nav-logo-txt {
-    @apply flex-[0.8] cursor-pointer text-[30px] text-red-700 font-bold uppercase;
+    @apply flex-[0.8] cursor-pointer text-[30px] text-white font-bold uppercase;
   }
   @media (max-width: 1024px) {
     .nav-logo-txt {
@@ -26,7 +26,7 @@
   }
 
   .nav-link {
-		@apply relative font-semibold text-red-900 cursor-pointer text-[20px] md:text-[18px] sm:text-[17px] w-fit md:block after:block after:content-[''] after:absolute after:h-[3px] after:bg-[#A03000] after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center hidden;
+		@apply relative font-semibold text-white cursor-pointer text-[20px] md:text-[18px] sm:text-[17px] w-fit md:block after:block after:content-[''] after:absolute after:h-[3px] after:bg-white after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center hidden;
 	}
 
   /* Mobile Navigation (mnav) */
@@ -35,11 +35,11 @@
   }
 
 	.mnav-link {
-		@apply relative mb-[2rem] font-semibold text-red-900 cursor-pointer text-[22px] w-fit md:block after:block after:content-[''] after:absolute after:h-[3px] after:bg-[#A03000] after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center;
+		@apply relative mb-[2rem] font-extrabold text-white cursor-pointer text-[22px] w-fit md:block after:block after:content-[''] after:absolute after:h-[3px] after:bg-white after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center;
 	}
 
   .hero {
-    @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[#7F1D1D] bg-cover bg-center;
+    @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[url('/images/bg.jpg')] bg-cover bg-center;
   }
 
   .slider-container {
@@ -55,10 +55,6 @@
   }
   
   @media (max-width: 1024px) {
-    .hero {
-      @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[url('/websiteImages/BgImage.png')] bg-cover bg-center;
-    }
-
     .slider-container {
       @apply w-auto h-[300px] mx-auto object-center;
     }

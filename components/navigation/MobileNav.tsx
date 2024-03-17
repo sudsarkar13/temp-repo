@@ -12,7 +12,7 @@ const MobileNav = ({ nav, closeNav }: Props) => {
 
 	return (
 		<div
-			className={`fixed ${navAnimation} transform transition-all duration-300 top-0 left-0 right-0 bottom-0 z-[1000000] bg-[#F1B61F]`}
+			className={`fixed ${navAnimation} transform transition-all duration-300 top-0 left-0 right-0 bottom-0 z-[1000000] bg-[#141C27]`}
 		>
 			<div className='w-[100vw] h-[100vh] flex flex-col items-center justify-center'>
 				<div className='mnav-link mnav'>Home</div>
@@ -25,7 +25,7 @@ const MobileNav = ({ nav, closeNav }: Props) => {
 				onClick={closeNav}
 				className='absolute z-[100000000] cursor-pointer top-[2rem] right-[2rem] w-[2rem] h-[2rem] text-white'
 			>
-				<XMarkIcon className='font-[1500] text-red-900' />
+				<XMarkIcon className='font-[1700] text-white' />
 			</div>
 		</div>
 	);

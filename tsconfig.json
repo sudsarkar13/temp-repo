@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/hero/gallery/Gallery.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/**/*"],
   "exclude": ["node_modules"]
 }
