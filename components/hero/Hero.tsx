@@ -1,13 +1,13 @@
 import React from "react";
 import Gallery from "./gallery/Gallery";
-import About from "../webpages/About";
+import Partners from "./gallery/Partners";
 
 const Hero = () => {
 	return (
 		<div className='hero'>
 			<div className="slider-container">
 				<Gallery />
-				<About />
+				<Partners />
 			</div>
 		</div>
 	);
