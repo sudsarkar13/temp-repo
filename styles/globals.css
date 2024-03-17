@@ -68,6 +68,10 @@
     }
   }
 
+  .partners {
+    @apply mt-[3rem] w-[90%] h-[350px] rounded-xl mx-auto bg-slate-200 text-center text-black font-bold opacity-70;
+  }
+
   .about {
     @apply mt-[4rem] px-10 text-white font-bold;
   }

@@ -49,7 +49,7 @@ const Gallery = ({ }) => {
 				autoPlaySpeed={2000}
 				keyBoardControl={true}
 				customTransition='all .5'
-				transitionDuration={500}
+				transitionDuration={1200}
 				containerClass='carousel-container'
 				removeArrowOnDeviceType={["tablet", "mobile"]}
 				dotListClass='custom-dot-list-style'
