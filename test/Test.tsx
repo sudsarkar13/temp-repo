@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import { Nav, MobileNav } from "@/components/navigation";
-import Hero from "@/components/hero/Hero";
+import { NavTest, MobileNavTest } from "@/test/components/navigation";
+import HeroTest from "@/test/components/hero/HeroTest";
 import About from "@/components/webpages/About";
 
 const Test = () => {
@@ -19,9 +19,9 @@ const Test = () => {
 				/>
 			</Head>
 			<div>
-				<MobileNav nav={nav} closeNav={closeNav} />
-				<Nav openNav={openNav} />
-				<Hero />
+				<MobileNavTest nav={nav} closeNav={closeNav} />
+				<NavTest openNav={openNav} />
+				<HeroTest />
 				<About />
 			</div>
 		</div>

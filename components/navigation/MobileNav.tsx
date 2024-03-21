@@ -1,7 +1,5 @@
 import React from "react";
-import Image from "next/legacy/image";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
 
 interface Props {
 	nav: boolean;
@@ -21,9 +19,6 @@ const MobileNav = ({ nav, closeNav }: Props) => {
 				<div className='mnav-link mnav'>Services</div>
 				<div className='mnav-link mnav'>Shop</div>
 				<div className='mnav-link mnav'>Contact</div>
-				<Link href={'/test'}>
-					<div className='mnav-link mnav'>Test</div>
-				</Link>
 			</div>
 			<div
 				onClick={closeNav}
