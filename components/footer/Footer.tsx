@@ -7,7 +7,7 @@ const Footer = () => {
 	return (
 		<div className='footer'>
 			<Link href={"/Test"}>
-				<p className='underline'>Test</p>
+				<p className='underline'>Test (not for production use)</p>
 			</Link>
 			<br />
 			<p>Copyright © {curryear} Maa Tarini Electrical. All rights reserved.</p>

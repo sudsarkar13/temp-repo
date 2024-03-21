@@ -4,7 +4,7 @@ import { Partners } from "@/components/hero/gallery";
 
 const HeroTest = () => {
 	return (
-		<div>
+		<div className="hero">
 			<div className='slider-container'>
 				<GalleryTest />
 				<Partners />
