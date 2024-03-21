@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Nav, MobileNav } from "@/components/navigation";
 import Hero from "@/components/hero/Hero";
 import About from "@/components/webpages/About";
+import Footer from "@/components/footer/Footer";
 
 const HomePage = () => {
 	const [nav, setNav] = useState(false);
@@ -23,6 +24,7 @@ const HomePage = () => {
 				<Nav openNav={openNav} />
 				<Hero />
 				<About />
+				<Footer />
 			</div>
 		</div>
 	);

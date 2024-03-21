@@ -106,5 +106,10 @@
   .about h1 {
     @apply pt-[4rem] px-[6rem] text-white text-[16px] md:text-[25px] font-bold;
   }
+
+  /* Footer Area Do not Interfere */
+  .footer {
+    @apply text-center text-[14px] py-[1rem] bg-[#0b1016] text-slate-400;
+  }
   
 }

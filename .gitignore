@@ -36,5 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 # extra files
-# test
-# test.css
+Test.tsx
+test
+test.css
