@@ -1,10 +1,10 @@
-import Head from "next/head";
 import React, { useState } from "react";
+import Head from "next/head";
 import { Nav, MobileNav } from "@/components/navigation";
 import Hero from "@/components/hero/Hero";
 import About from "@/components/webpages/About";
 
-const HomePage = () => {
+const Test = () => {
 	const [nav, setNav] = useState(false);
 	const openNav = () => setNav(true);
 	const closeNav = () => setNav(false);
@@ -12,10 +12,10 @@ const HomePage = () => {
 	return (
 		<div className='overflow-x-hidden'>
 			<Head>
-				<title>Maa Tarini Electrical</title>
+				<title>TestPage</title>
 				<meta
 					name='description'
-					content='Maa Tarini Electrical is an electrical shop based in Cuttack, Odisha. We offer complete range of electrical services.'
+					content='Test page for Maa Tarini Electrical. All new components are tested here.'
 				/>
 			</Head>
 			<div>
@@ -28,4 +28,4 @@ const HomePage = () => {
 	);
 };
 
-export default HomePage;
+export default Test;
