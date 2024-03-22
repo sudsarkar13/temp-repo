@@ -53,8 +53,8 @@ const Footer = () => {
 						<p>Terms & Conditions</p>
 						<br />
 						<h1>Contact Us</h1>
-						<p>+91 9937884307</p><br />
-						<p>+91 70088 36851</p>
+						<p>+91 9937884307</p>
+						<p>+91 7008836851</p>
 					</div>
 				</div>
 				<div className='tfooter-content'>
