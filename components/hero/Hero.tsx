@@ -1,13 +1,14 @@
 import React from "react";
-import { Gallery, Partners } from "./gallery";
+import { Gallery, GalleryTest, Partners } from "./gallery";
 
 const Hero = () => {
 	return (
 		<div className='hero'>
 			<div className='slider-container'>
 				<Gallery />
-				<Partners />
 			</div>
+			{/* <GalleryTest /> */}
+			<Partners />
 		</div>
 	);
 };

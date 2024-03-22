@@ -42,8 +42,12 @@
     @apply mt-[10.5vh] h-[89.5vh] w-[100%] bg-[url('/images/bg.jpg')] bg-cover bg-center;
   }
 
+  .hero-container {
+    @apply flex flex-col items-center justify-center;
+  }
+
   .slider-container {
-    @apply w-[1900px] h-[500px] mx-auto;
+    @apply w-[1900px] h-[400px] mx-auto;
   }
   
   .slider {
@@ -99,6 +103,8 @@
     }
   }
 
+  /* About Section */
+
   .about {
     @apply bg-[#0F1722] w-[100%] h-[60vh] text-white font-bold;
   }
@@ -116,8 +122,11 @@
 
   /* Test Slider */
 
-  .tmain {
-    @apply text-white text-center text-[25px] font-bold;
+  .tfooter {
+    @apply flex flex-row bg-[#0b1016] text-slate-400 p-[2rem];
+  }
+  .tfooter-content {
+    @apply ;
   }
   /* This area only belongs for testing purpose only */
 }

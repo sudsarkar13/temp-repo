@@ -13,7 +13,7 @@ const Nav = ({ openNav }: Props) => {
 			<div className='flex items-center justify-between w-[92%] mx-auto h-[100%]'>
 				{/* <Image src='/websiteImages/Logo.png' width={80} height={80} className='nav-logo' alt={"logo"} /> */}
 				<Image
-					src='/favicon.ico'
+					src='/websiteImages/Logo.png'
 					width={70}
 					height={70}
 					className='nav-logo'
