@@ -106,10 +106,18 @@
   .about h1 {
     @apply pt-[4rem] px-[6rem] text-white text-[16px] md:text-[25px] font-bold;
   }
-
+  
   /* Footer Area Do not Interfere */
   .footer {
     @apply text-center text-[14px] py-[1rem] bg-[#0b1016] text-slate-400;
   }
   
+  /* All the test components will start with "t" prefix for eg: tslider (which means test slider) */
+
+  /* Test Slider */
+
+  .tmain {
+    @apply text-white text-center text-[25px] font-bold;
+  }
+  /* This area only belongs for testing purpose only */
 }
