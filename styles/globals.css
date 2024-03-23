@@ -125,7 +125,7 @@
   }
   .tfooter-main {
     /* removing lg:grid-cols-4 */
-    @apply grid pb-[4rem] grid-cols-1 md:grid-cols-4 w-[90%] mx-auto gap-[2rem];
+    @apply grid pb-[2rem] grid-cols-1 md:grid-cols-4 w-[80%] mx-auto gap-[2rem];
   }
   .tfooter-content {
     @apply flex items-center md:justify-center space-x-6;
@@ -137,19 +137,28 @@
     @apply mt-[0.5rem] md:mt-[3.5rem] font-extralight text-[10.7px] md:text-[18px];
   }
   .tfooter-address h1 {
-    @apply text-[16px] md:text-[20px] font-bold pb-2 underline;
+    @apply text-[12px] md:text-[16px] font-bold pb-2 underline;
   }
   .tfooter-data {
     @apply mt-[0.5rem] md:mt-[3rem] items-center font-extralight px-[1rem];
   }
   .tfooter-data h1 {
-    @apply text-[16px] md:text-[22px] font-bold pb-2 underline;
+    @apply text-[12px] md:text-[16px] font-bold pb-2 underline;
   }
   .tfooter-data p {
-    @apply hover:underline text-[14px] md:text-[20px];
+    @apply hover:underline text-[12px] md:text-[16px];
+  }
+  .tfooter-map-container {
+    @apply flex justify-center items-center;
   }
   .tfooter-map {
-    @apply w-[300px] h-[200px];
+    @apply pb-[2rem];
+  }
+  .tfooter-map h1 {
+    @apply text-[12px] md:text-[18px] items-center justify-center font-bold pb-[1rem] underline;
+  }
+  .tfooter-map iframe {
+    @apply flex w-[320px] h-[230px] md:w-[1300px] md:h-[300px] items-center justify-center;
   }
   .tfooter-copyright {
     @apply flex items-center justify-center px-0 text-[12px] md:text-[14px] sm:text-[13px];
