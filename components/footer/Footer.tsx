@@ -35,16 +35,22 @@ const Footer = () => {
 				</div>
 				<div className='tfooter-content'>
 					<div className='tfooter-data'>
-						<h1>Pages</h1>
-						<p>About</p>
+						<h1>Our Pages</h1>
+						<p>About Owner</p>
 						<p>Services</p>
 						<p>Shop</p>
+						<p>Staff</p>
 					</div>
 				</div>
 				<div className='tfooter-content'>
 					<div className='tfooter-data'>
 						<h1>Quick Links</h1>
-						<p>Download Logo</p>
+						<a
+							href='/websiteImages/Logo.png'
+							download='Maa Tarini Electrical Logo.png'
+						>
+							<p>Download Logo</p>
+						</a>
 						<Link href={"/sitemap.xml"}>
 							<p>Sitemap</p>
 						</Link>
@@ -60,7 +66,7 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-			<div className="tfooter-map-container">
+			<div className='tfooter-map-container'>
 				<div className='tfooter-map'>
 					<h1>Location</h1>
 					<div className='tfooter-map-iframe'>
@@ -69,9 +75,7 @@ const Footer = () => {
 				</div>
 			</div>
 			<div className='tfooter-copyright'>
-				<p>
-					© {curryear} Maa Tarini Electrical, All rights reserved.
-				</p>
+				<p>© {curryear} Maa Tarini Electrical, All rights reserved.</p>
 			</div>
 		</div>
 	);

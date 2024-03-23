@@ -158,7 +158,7 @@
     @apply text-[12px] md:text-[18px] items-center justify-center font-bold pb-[1rem] underline;
   }
   .tfooter-map iframe {
-    @apply flex w-[320px] h-[230px] md:w-[1300px] md:h-[300px] items-center justify-center;
+    @apply flex w-[320px] h-[230px] md:w-[1300px] md:h-[340px] items-center justify-center;
   }
   .tfooter-copyright {
     @apply flex items-center justify-center px-0 text-[12px] md:text-[14px] sm:text-[13px];
