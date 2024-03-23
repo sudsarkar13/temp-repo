@@ -7,10 +7,10 @@ const curryear = new Date().getFullYear();
 
 const Footer = () => {
 	return (
-		<div className='tfooter'>
-			<div className='tfooter-main'>
-				<div className='tfooter-content'>
-					<div className='tfooter-logo'>
+		<div className='footer'>
+			<div className='footer-main'>
+				<div className='footer-content'>
+					<div className='footer-logo'>
 						<Link href={"/"}>
 							<Image
 								src='/websiteImages/Logo.png'
@@ -20,7 +20,7 @@ const Footer = () => {
 							/>
 						</Link>
 					</div>
-					<div className='tfooter-address'>
+					<div className='footer-address'>
 						<h1>Address</h1>
 						<p>
 							Shop No. -4,
@@ -33,8 +33,8 @@ const Footer = () => {
 						</p>
 					</div>
 				</div>
-				<div className='tfooter-content'>
-					<div className='tfooter-data'>
+				<div className='footer-content'>
+					<div className='footer-data'>
 						<h1>Our Pages</h1>
 						<p>About Owner</p>
 						<p>Services</p>
@@ -42,8 +42,8 @@ const Footer = () => {
 						<p>Staff</p>
 					</div>
 				</div>
-				<div className='tfooter-content'>
-					<div className='tfooter-data'>
+				<div className='footer-content'>
+					<div className='footer-data'>
 						<h1>Quick Links</h1>
 						<a
 							href='/websiteImages/Logo.png'
@@ -58,23 +58,29 @@ const Footer = () => {
 						<p>Terms & Conditions</p>
 					</div>
 				</div>
-				<div className='tfooter-content'>
-					<div className='tfooter-data'>
+				<div className='footer-content'>
+					<div className='footer-data'>
 						<h1>Contact Us</h1>
 						<p>+91 9937884307</p>
 						<p>+91 7008836851</p>
+						<Link
+							href={"https://api.whatsapp.com/send/?phone=%2B919937884307"}
+							target='_blank'
+						>
+							<p>Whatsapp</p>
+						</Link>
 					</div>
 				</div>
 			</div>
-			<div className='tfooter-map-container'>
-				<div className='tfooter-map'>
+			<div className='footer-map-container'>
+				<div className='footer-map'>
 					<h1>Location</h1>
-					<div className='tfooter-map-iframe'>
+					<div className='footer-map-iframe'>
 						<GoogleMap />
 					</div>
 				</div>
 			</div>
-			<div className='tfooter-copyright'>
+			<div className='footer-copyright'>
 				<p>© {curryear} Maa Tarini Electrical, All rights reserved.</p>
 			</div>
 		</div>

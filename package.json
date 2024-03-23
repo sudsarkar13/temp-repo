@@ -21,15 +21,14 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "@react-google-maps/api": "^2.19.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.4.17",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.5",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"

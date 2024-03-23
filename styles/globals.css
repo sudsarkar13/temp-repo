@@ -46,34 +46,25 @@
     @apply flex flex-col items-center justify-center;
   }
 
-  .slider-container {
-    @apply w-[1900px] h-[400px] mx-auto;
+  /* Gallery Carousel */
+  .gallery {
+    @apply pt-[1rem] w-[90%] md:w-[60%] mx-auto;
+  }
+
+  .gcarousel {
+    @apply h-[14rem] sm:h-64 xl:h-80 2xl:h-96;
   }
   
-  .slider {
-    @apply w-[100%] h-[400px] mt-[0.5rem] items-center justify-center;
-  }
-  
-  .slider img {
-    @apply w-[100%] h-[100%] object-contain items-center justify-center;
-  }
-  
-  @media (max-width: 1024px) {
-    .slider-container {
-      @apply w-auto h-[300px] mx-auto object-center;
-    }
-  
-    .slider {
-      @apply  w-[100%] h-auto mt-[0.5rem] items-center justify-center;
-    }
-  
-    .slider img {
-      @apply w-auto h-auto items-center justify-center;
-    }
+  .carousel img {
+    @apply w-full h-full md:object-contain; 
   }
 
   .partners {
-    @apply mt-[1.5rem] w-[90%] h-[390px] py-[0.5rem] rounded-xl mx-auto bg-white text-center text-black font-bold bg-opacity-65;
+    @apply pb-[1rem];
+  }
+
+  .partners-container {
+    @apply mt-[1rem] w-[90%] h-[460px] md:h-[390px] py-[1rem] rounded-xl mx-auto bg-white text-center text-black font-bold bg-opacity-65;
   }
 
   .partners h1 {
@@ -81,7 +72,7 @@
   }
 
   .partners-logo {
-    @apply pt-[1rem] px-[4rem] grid grid-cols-3 md:grid-cols-9 gap-[1rem];
+    @apply pt-[1rem] px-[6rem] grid grid-cols-3 md:grid-cols-9 gap-[1rem];
   }
 
   .partners-logo img {
@@ -114,54 +105,66 @@
   }
   
   /* Footer Area Do not Interfere */
-  
-  
-  /* All the test components will start with "t" prefix for eg: tslider (which means test slider) */
-
-  /* Test Slider */
-
-  .tfooter {
+  .footer {
     @apply px-[2rem] py-[2rem] bg-[#0b1016] text-slate-400;
   }
-  .tfooter-main {
+
+  .footer-main {
     /* removing lg:grid-cols-4 */
     @apply grid pb-[2rem] grid-cols-1 md:grid-cols-4 w-[80%] mx-auto gap-[2rem];
   }
-  .tfooter-content {
+
+  .footer-content {
     @apply flex items-center md:justify-center space-x-6;
   }
-  .tfooter-logo{
+
+  .footer-logo{
     @apply hidden md:contents w-[6rem] h-[6rem] items-center justify-center;
   }
-  .tfooter-address {
+
+  .footer-address {
     @apply mt-[0.5rem] md:mt-[3.5rem] font-extralight text-[10.7px] md:text-[18px];
   }
-  .tfooter-address h1 {
+
+  .footer-address h1 {
     @apply text-[12px] md:text-[16px] font-bold pb-2 underline;
   }
-  .tfooter-data {
+
+  .footer-data {
     @apply mt-[0.5rem] md:mt-[3rem] items-center font-extralight px-[1rem];
   }
-  .tfooter-data h1 {
+
+  .footer-data h1 {
     @apply text-[12px] md:text-[16px] font-bold pb-2 underline;
   }
-  .tfooter-data p {
+
+  .footer-data p {
     @apply hover:underline text-[12px] md:text-[16px];
   }
-  .tfooter-map-container {
+
+  .footer-map-container {
     @apply flex justify-center items-center;
   }
-  .tfooter-map {
+
+  .footer-map {
     @apply pb-[2rem];
   }
-  .tfooter-map h1 {
+
+  .footer-map h1 {
     @apply text-[12px] md:text-[18px] items-center justify-center font-bold pb-[1rem] underline;
   }
-  .tfooter-map iframe {
+
+  .footer-map iframe {
     @apply flex w-[320px] h-[230px] md:w-[1300px] md:h-[340px] items-center justify-center;
   }
-  .tfooter-copyright {
+
+  .footer-copyright {
     @apply flex items-center justify-center px-0 text-[12px] md:text-[14px] sm:text-[13px];
   }
+  
+  /* All the test components will start with "t" prefix for eg: tslider (which means test slider) */
+  
+  /* Test Slider */
+  
   /* This area only belongs for testing purpose only */
 }

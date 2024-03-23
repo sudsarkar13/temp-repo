@@ -1,5 +1,6 @@
 import React from "react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
 
 interface Props {
 	nav: boolean;

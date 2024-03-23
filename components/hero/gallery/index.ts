@@ -2,4 +2,3 @@
 
 export { default as Gallery } from "./Gallery";
 export { default as Partners } from "./Partners";
-export { default as GalleryTest } from "./GalleryTest";
