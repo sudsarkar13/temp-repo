@@ -46,7 +46,7 @@ const Footer = () => {
 					<div className='footer-data'>
 						<h1>Quick Links</h1>
 						<a
-							href='/websiteImages/Logo.png'
+							href='/downloads/Maa-Tarini-Electrical-Logo.png'
 							download='Maa-Tarini-Electrical-Logo.png'
 						>
 							<p>Download Logo</p>

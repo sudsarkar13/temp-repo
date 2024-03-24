@@ -29,7 +29,6 @@ sitemap({
 	extraPaths: [
 		"/",
 		"/#about",
-        "/websiteImages/Maa-Tarini-Electrical-Logo.png"
 	],
 });
 

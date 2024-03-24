@@ -7,6 +7,10 @@
 
 /* Note: Add spaces between classes for better identification */
 
+html {
+	scroll-behavior: smooth;
+}
+
 @layer components {
   /* Navigation (nav) */
   .nav {
@@ -139,7 +143,7 @@
   }
 
   .footer-data p {
-    @apply hover:underline text-[12px] md:text-[16px];
+    @apply hover:text-blue-700 text-[12px] md:text-[16px];
   }
 
   .footer-map-container {
@@ -164,7 +168,7 @@
   
   /* All the test components will start with "t" prefix for eg: tslider (which means test slider) */
   
-  /* Test Slider */
+  
   
   /* This area only belongs for testing purpose only */
 }
