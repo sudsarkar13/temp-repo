@@ -104,8 +104,20 @@ html {
     @apply bg-[#0F1722] w-[100%] h-[60vh] text-white font-bold;
   }
 
+  .about-container {
+    @apply grid grid-cols-1 md:grid-cols-2 px-[6rem] py-[4rem];
+  }
+
   .about h1 {
-    @apply pt-[4rem] px-[6rem] text-white text-[16px] md:text-[25px] font-bold;
+    @apply text-white text-[16px] md:text-[25px] pb-[1rem] font-bold;
+  }
+
+  .about-partition {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .about p {
+    @apply text-white text-[12px] md:text-[16px] font-normal;
   }
   
   /* Footer Area Do not Interfere */
@@ -165,6 +177,30 @@ html {
   .footer-copyright {
     @apply flex items-center justify-center px-0 text-[12px] md:text-[14px] sm:text-[13px];
   }
+
+  .footer-love {
+    @apply items-center justify-center px-0 pb-[2rem] text-[12px] md:text-[18px] sm:text-[13px];
+  }
+
+  .footer-love p {
+    @apply flex items-center justify-center;
+  }
+
+  .white-svg {
+    filter: brightness(0) invert(1);
+  }
+
+  /* .responsive-logo {
+    height: 10px;
+    width: 30px;
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-logo {
+      height: 20px;
+      width: 60px;
+    }
+  } */
   
   /* All the test components will start with "t" prefix for eg: tslider (which means test slider) */
   

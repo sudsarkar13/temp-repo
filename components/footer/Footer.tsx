@@ -80,6 +80,26 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
+			<div className='footer-love'>
+				<p>
+					Made with ❤️ using &nbsp;
+					<Image
+						src='/next.svg'
+						width={30}
+						height={10}
+						alt='Next.js logo'
+						className='white-svg'
+					/>
+					&nbsp; and hosted on &nbsp;
+					<Image
+						src='/vercel.svg'
+						width={30}
+						height={10}
+						alt='Vercel logo'
+						className='white-svg responsive-logo'
+					/>
+				</p>
+			</div>
 			<div className='footer-copyright'>
 				<p>© {curryear} Maa Tarini Electrical, All rights reserved.</p>
 			</div>
