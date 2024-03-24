@@ -21,17 +21,15 @@ const path = require("path");
 const fs = require("fs");
 
 sitemap({
-	baseUrl: "https://temp-repo-beta.vercel.app/",
+	baseUrl: "https://temp-repo-beta.vercel.app",
 	pagesDirectory: path.join(__dirname, "../components/webpages"),
 	targetDirectory: path.join(__dirname, "../public"),
 	ignoredExtensions: ["js", "map", "json", "xml", "png", "jpg", "jpeg", "svg"],
-	ignoredPaths: ["favicon", "index", "404", "500"],
+	ignoredPaths: ["favicon", "index", "404", "500", "About", "Services", "Shop", "Contact"],
 	extraPaths: [
 		"/",
-		"/about",
-		"/services",
-		"/shop",
-		"/contact",
+		"/#about",
+        "/websiteImages/Maa-Tarini-Electrical-Logo.png"
 	],
 });
 
