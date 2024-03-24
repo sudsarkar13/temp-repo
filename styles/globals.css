@@ -177,30 +177,6 @@ html {
   .footer-copyright {
     @apply flex items-center justify-center px-0 text-[12px] md:text-[14px] sm:text-[13px];
   }
-
-  .footer-love {
-    @apply items-center justify-center px-0 pb-[2rem] text-[12px] md:text-[18px] sm:text-[13px];
-  }
-
-  .footer-love p {
-    @apply flex items-center justify-center;
-  }
-
-  .white-svg {
-    filter: brightness(0) invert(1);
-  }
-
-  /* .responsive-logo {
-    height: 10px;
-    width: 30px;
-  }
-  
-  @media (min-width: 768px) {
-    .responsive-logo {
-      height: 20px;
-      width: 60px;
-    }
-  } */
   
   /* All the test components will start with "t" prefix for eg: tslider (which means test slider) */
   

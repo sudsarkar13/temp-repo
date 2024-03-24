@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React, { useState } from "react";
+import Alarm from "@/components/alert/Alarm";
 import { Nav, MobileNav } from "@/components/navigation";
 import Hero from "@/components/hero/Hero";
 import About from "@/components/webpages/About";
@@ -23,6 +24,7 @@ const HomePage = () => {
 				<MobileNav nav={nav} closeNav={closeNav} />
 				<Nav openNav={openNav} />
 				<Hero />
+				<Alarm />
 				<About />
 				<Footer />
 			</div>
