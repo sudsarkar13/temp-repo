@@ -3,8 +3,8 @@ import React from "react";
 import { Carousel } from 'flowbite-react';
 
 const GCarousel = () => {
-	return <div className="">
-    <div className="gcarousel">
+	return <div className="gcarousel">
+    <div className="gcarousel-container">
       <Carousel className="carousel">
         <img src="/images/img-1.png"  alt="..." />
         <img src="/images/img-2.png" alt="..." />
