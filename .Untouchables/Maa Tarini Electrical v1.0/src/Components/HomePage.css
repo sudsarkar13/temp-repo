@@ -1,0 +1,388 @@
+
+.HomePage_HomePage {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	margin: auto;
+	width: 100%;
+	height: 100vh;
+	overflow: auto;
+	background: rgba(160,48,0,1.00);
+}
+.HomePage_HomePage .Background {
+	width: 1847.3883056640625px;
+	height: 1382.134033203125px;
+}
+.HomePage_HomePage .Background .Background_1 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+}
+.HomePage_HomePage .Logo {
+	width: 667px;
+	height: 84px;
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+}
+.HomePage_HomePage .Logo .Logo_1 {
+	position: relative;
+	flex: none;
+	margin-right: 24px;
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Logo .MAATARINIELECTRICALS {
+	position: relative;
+	flex: none;
+	margin-right: 24px;
+	width: 543px;
+	height: 59px;
+	display: flex;
+	align-items: center;
+	color: rgba(255,245,0,1.00);
+	border: 1px solid rgba(0,0,0,1);
+	font-family: Hanuman;
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 58.59375px;
+}
+.HomePage_HomePage .Navbar {
+	width: 1350px;
+	height: 72px;
+}
+.HomePage_HomePage .Navbar .Navbarbase {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background: rgba(241,182,31,1.00);
+	border-radius: 15px;
+}
+.HomePage_HomePage .Navbar .Navigation {
+	position: absolute;
+	left: 971px;
+	top: 22px;
+	width: 348px;
+	height: 29px;
+	display: flex;
+	box-sizing: border-box;
+}
+.HomePage_HomePage .Navbar .Navigation .HOME {
+	position: relative;
+	flex: none;
+	margin-right: 15px;
+	width: 64px;
+	height: 29px;
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,1.00);
+	font-family: Hanuman;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 29.296875px;
+}
+.HomePage_HomePage .Navbar .Navigation .ABOUT {
+	position: relative;
+	flex: none;
+	margin-right: 15px;
+	width: 72px;
+	height: 29px;
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,1.00);
+	font-family: Hanuman;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 29.296875px;
+}
+.HomePage_HomePage .Navbar .Navigation .PRODUCTS {
+	position: relative;
+	flex: none;
+	margin-right: 15px;
+	width: 111px;
+	height: 29px;
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,1.00);
+	font-family: Hanuman;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 29.296875px;
+}
+.HomePage_HomePage .Navbar .Navigation .SHOP {
+	position: relative;
+	flex: none;
+	margin-right: 15px;
+	width: 56px;
+	height: 29px;
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,1.00);
+	font-family: Hanuman;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 29.296875px;
+}
+.HomePage_HomePage .Navbar .CONTACT {
+	position: absolute;
+	left: 42px;
+	top: 22px;
+	width: 97px;
+	height: 29px;
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,1.00);
+	font-family: Hanuman;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 29.296875px;
+}
+.HomePage_HomePage .Address {
+	position: absolute;
+	left: 869px;
+	top: 27px;
+	width: 519px;
+	height: 87px;
+}
+.HomePage_HomePage .Address .ShopNo4MaaTariniElectricalsPCSarkarLaneArunodayaNagarCuttackPin753012OdishaNearNandaGopalSweetStallPh919937884307 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+	text-align: right;
+	align-items: center;
+	color: rgba(255,255,255,1.00);
+	font-family: Hanuman;
+	font-size: 20px;
+	font-weight: 900;
+	line-height: 29.296875px;
+}
+.HomePage_HomePage .Brands {
+	position: absolute;
+	left: 45px;
+	top: 706px;
+	width: 1350px;
+	height: 305px;
+}
+.HomePage_HomePage .Brands .BrandDealers {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 1350px;
+	height: 305px;
+	background: rgba(230,230,230,1.00);
+	border-radius: 20px;
+}
+.HomePage_HomePage .Brands .Ourtrustedelectricalpartners {
+	position: absolute;
+	left: 67px;
+	top: 25px;
+	width: 609px;
+	height: 44px;
+	display: flex;
+	align-items: center;
+	color: rgba(0,0,0,1.00);
+	font-family: Hanuman;
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 58.59375px;
+}
+.HomePage_HomePage .Brands .PhilipsLogo {
+	position: absolute;
+	left: 94px;
+	top: 82px;
+	width: 67.80660247802734px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .HavellsLogo {
+	position: absolute;
+	left: 186.80661010742188px;
+	top: 82px;
+	width: 282.90313720703125px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .RRKabelLogo {
+	position: absolute;
+	left: 494.7097473144531px;
+	top: 89.72262573242188px;
+	width: 155.8452911376953px;
+	height: 66.72923278808594px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .DorekaLogo {
+	position: absolute;
+	left: 675.5550537109375px;
+	top: 82px;
+	width: 149.93959045410156px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .CromptonGreavesLogo {
+	position: absolute;
+	left: 850.49462890625px;
+	top: 82px;
+	width: 217.8780975341797px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .PolycabWiresLogo {
+	position: absolute;
+	left: 1093.372802734375px;
+	top: 82px;
+	width: 163.57069396972656px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .BajajElectricalsLogo {
+	position: absolute;
+	left: 94px;
+	top: 188.51611328125px;
+	width: 277.1609191894531px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .VguardLogo {
+	position: absolute;
+	left: 396.1609191894531px;
+	top: 188.51611328125px;
+	width: 186.61199951171875px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+	border-radius: 20px;
+}
+.HomePage_HomePage .Brands .OrientElectricLogo {
+	position: absolute;
+	left: 607.77294921875px;
+	top: 188.51611328125px;
+	width: 236.67918395996094px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .FinolexCablesLogo {
+	position: absolute;
+	left: 869.4520874023438px;
+	top: 188.51611328125px;
+	width: 218.4741973876953px;
+	height: 81.51610565185547px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Brands .ABBLogo {
+	position: absolute;
+	left: 1112.92626953125px;
+	top: 203.95941162109375px;
+	width: 136.5452117919922px;
+	height: 51.4837532043457px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Bannerv1 {
+	position: absolute;
+	left: 45px;
+	top: 227.5px;
+	width: 1350px;
+	height: 465px;
+}
+.HomePage_HomePage .Bannerv1 .DisplayBoard {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 1350px;
+	height: 465px;
+	border-radius: 20px;
+}
+.HomePage_HomePage .Bannerv1 .LipunBhai {
+	position: absolute;
+	left: 1055px;
+	top: 23.5px;
+	width: 229.19932556152344px;
+	height: 382px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Bannerv1 .HappyNewYear {
+	position: absolute;
+	left: 441px;
+	top: 32.5px;
+	width: 509.3897705078125px;
+	height: 383px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Bannerv1 .Logo_2 {
+	position: absolute;
+	left: 68px;
+	top: 84.5px;
+	width: 279px;
+	height: 279px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .Bannerv1 .Logo_3 {
+	position: absolute;
+	left: 592px;
+	top: 245.5px;
+	width: 130px;
+	height: 130px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.HomePage_HomePage .DotSlider {
+	width: 65px;
+	height: 15px;
+	display: flex;
+	box-sizing: border-box;
+}
+.HomePage_HomePage .DotSlider .Ellipse1 {
+	position: relative;
+	flex: none;
+	margin-right: 10px;
+	width: 15px;
+	height: 15px;
+	background: rgba(192,192,192,1.00);
+	border-radius: 50%;
+	border: 1px solid rgba(0,0,0,1);
+	box-sizing: border-box;
+}
+.HomePage_HomePage .DotSlider .Ellipse2 {
+	position: relative;
+	flex: none;
+	margin-right: 10px;
+	width: 15px;
+	height: 15px;
+	background: rgba(192,192,192,1.00);
+	border-radius: 50%;
+	border: 1px solid rgba(0,0,0,1);
+	box-sizing: border-box;
+}
+.HomePage_HomePage .DotSlider .Ellipse3 {
+	position: relative;
+	flex: none;
+	margin-right: 10px;
+	width: 15px;
+	height: 15px;
+	background: rgba(192,192,192,1.00);
+	border-radius: 50%;
+	border: 1px solid rgba(0,0,0,1);
+	box-sizing: border-box;
+}

@@ -1,0 +1,40 @@
+
+.DotSlider_DotSlider {
+	width: 65px;
+	height: 15px;
+	display: flex;
+	box-sizing: border-box;
+}
+.DotSlider_DotSlider .Ellipse1 {
+	position: relative;
+	flex: none;
+	margin-right: 10px;
+	width: 15px;
+	height: 15px;
+	background: rgba(192,192,192,1.00);
+	border-radius: 50%;
+	border: 1px solid rgba(0,0,0,1);
+	box-sizing: border-box;
+}
+.DotSlider_DotSlider .Ellipse2 {
+	position: relative;
+	flex: none;
+	margin-right: 10px;
+	width: 15px;
+	height: 15px;
+	background: rgba(192,192,192,1.00);
+	border-radius: 50%;
+	border: 1px solid rgba(0,0,0,1);
+	box-sizing: border-box;
+}
+.DotSlider_DotSlider .Ellipse3 {
+	position: relative;
+	flex: none;
+	margin-right: 10px;
+	width: 15px;
+	height: 15px;
+	background: rgba(192,192,192,1.00);
+	border-radius: 50%;
+	border: 1px solid rgba(0,0,0,1);
+	box-sizing: border-box;
+}

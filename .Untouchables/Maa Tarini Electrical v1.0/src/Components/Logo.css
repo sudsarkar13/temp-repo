@@ -1,0 +1,32 @@
+
+.Logo_Logo {
+	width: 667px;
+	height: 84px;
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+}
+.Logo_Logo .Logo_1 {
+	position: relative;
+	flex: none;
+	margin-right: 24px;
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	overflow: hidden;
+}
+.Logo_Logo .MAATARINIELECTRICALS {
+	position: relative;
+	flex: none;
+	margin-right: 24px;
+	width: 543px;
+	height: 59px;
+	display: flex;
+	align-items: center;
+	color: rgba(255,245,0,1.00);
+	border: 1px solid rgba(0,0,0,1);
+	font-family: Hanuman;
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 58.59375px;
+}
