@@ -75,10 +75,7 @@
 } */
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-primary text-background font-primary;
+    @apply bg-primary text-white font-primary leading-loose;
   }
 }
