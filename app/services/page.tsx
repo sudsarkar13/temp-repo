@@ -1,11 +1,11 @@
 import React from 'react';
 
-const page: React.FC = () => {
+const ServicesPage: React.FC = () => {
   return (
     <main>
-      <div>page</div>
+      <div>Services Page</div>
     </main>
   );
 };
 
-export default page;
+export default ServicesPage;

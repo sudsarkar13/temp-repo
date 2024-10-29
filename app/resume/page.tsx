@@ -1,11 +1,11 @@
 import React from 'react';
 
-const page: React.FC = () => {
+const ResumePage: React.FC = () => {
   return (
     <main>
-      <div>page</div>
+      <div>Resume Page</div>
     </main>
   );
 };
 
-export default page;
+export default ResumePage;

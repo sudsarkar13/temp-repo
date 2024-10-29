@@ -1,11 +1,11 @@
 import React from 'react';
 
-const page: React.FC = () => {
+const AboutPage: React.FC = () => {
   return (
     <main>
-      <div>page</div>
+      <div>About Page</div>
     </main>
   );
 };
 
-export default page;
+export default AboutPage;
