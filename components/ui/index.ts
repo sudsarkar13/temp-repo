@@ -283,4 +283,4 @@ export {
 	TooltipContent,
 	TooltipProvider,
 } from "./tooltip";
-export { useToast, toast } from "./use-toast";
+export { useToast, toast } from "../../hooks/use-toast";
