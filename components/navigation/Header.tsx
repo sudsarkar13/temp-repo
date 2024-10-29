@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui";
+import { Button, SidebarProvider } from "@/components/ui";
 import Nav from "./Nav";
+import MobileNav from "./MobileNav";
 
 const Header: React.FC = () => {
 	return (
@@ -22,8 +23,10 @@ const Header: React.FC = () => {
 						</Link>
 					</div>
 
-          {/* mobile nav */}
-          <div className={`xl:hidden`}>mobile nav</div>
+					{/* mobile nav */}
+					<div className={`xl:hidden`}>
+							<MobileNav />
+					</div>
 				</div>
 			</header>
 		</main>
