@@ -3,6 +3,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import Stairs from "./Stairs";
 
 const PageTransition: React.FC<{ children: React.ReactNode }> = ({
 	children,
@@ -10,7 +11,7 @@ const PageTransition: React.FC<{ children: React.ReactNode }> = ({
 	const pathname = usePathname();
 	return (
 		<main>
-			<AnimatePresence>
+			<AnimatePresence mode="wait">
 				<div key={pathname}>
 					<motion.div
 						initial={{ opacity: 1 }}
@@ -20,6 +21,7 @@ const PageTransition: React.FC<{ children: React.ReactNode }> = ({
 						}}
 						className={`h-screen w-screen fixed bg-primary top-0 pointer-events-none`}
 					/>
+					<Stairs />
 					{children}
 				</div>
 			</AnimatePresence>
