@@ -18,7 +18,7 @@ const stairAnimation = {
 
 // Calculate the reverse index for staggered delay
 const reverseIndex = (index: any) => {
-	const totalSteps = 16; //number of steps
+	const totalSteps = 6; //number of steps
 	return totalSteps - index - 1;
 };
 
@@ -30,7 +30,7 @@ const Stairs: React.FC = () => {
       The delay for each div is calculated dynamically based on its reversed index,
       creating a staggered effect with decreasing delay for each subsequent step.
       */}
-			{[...Array(16)].map((_, index) => {
+			{[...Array(6)].map((_, index) => {
 				return (
 					<motion.div
 						key={index}
