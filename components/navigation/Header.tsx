@@ -12,7 +12,7 @@ const Header: React.FC = () => {
 					{/* logo */}
 					<Link href={`/`}>
 						<h1 className={`text-4xl font-semibold`}>
-							Sudeepta <span className={`text-accent`}>.</span>
+							Sudeepta<span className={`text-accent`}>.</span>
 						</h1>
 					</Link>
 					{/* desktop nav & hire me button */}
