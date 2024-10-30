@@ -79,3 +79,15 @@
 		@apply bg-primary text-white font-primary leading-loose;
 	}
 }
+
+@layer components {
+  .h1 {
+    @apply text-[34px] xl:text-[64px] leading-[1.1] font-semibold;
+  }
+  .h2 {
+    @apply text-[26px] xl:text-[48px] leading-[1.1] font-semibold;
+  }
+  .h2 {
+    @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
+  }
+}
