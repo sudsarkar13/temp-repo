@@ -7,6 +7,7 @@ import Link from "next/link";
 import Socials from "@/components/socials/Socials";
 import Photo from "@/components/photo/Photo";
 import { motion } from "framer-motion";
+import Stats from "@/components/stats/Stats";
 
 const Home: React.FC = () => {
 	return (
@@ -64,6 +65,10 @@ const Home: React.FC = () => {
 					<div className={`order-1 xl:order-none mb-8 xl:mb-0`}>
 						<Photo />
 					</div>
+				</div>
+				{/* stats */}
+				<div>
+					<Stats />
 				</div>
 			</div>
 		</section>
