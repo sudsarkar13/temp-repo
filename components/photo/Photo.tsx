@@ -23,7 +23,7 @@ const Photo: React.FC = () => {
 				joinedYear: stats.joinedYear,
 			});
 		} catch (error) {
-			console.error("Error fetching GitHub stats:", error);
+			// console.error("Error fetching GitHub stats:", error);
 		} finally {
 			setIsLoading(false);
 		}
