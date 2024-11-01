@@ -117,9 +117,9 @@ const Photo: React.FC = () => {
 						opacity: 1,
 						transition: { delay: 2, duration: 0.4, ease: "easeIn" },
 					}}
-					className="absolute -bottom-2 sm:bottom-2 md:bottom-0 -right-6 md:-right-24 p-2 sm:p-4 rounded-xl backdrop-blur-sm bg-black/20 
+					className="absolute -bottom-2 -md:bottom-24 lg:bottom-0 -right-6 md:-right-24 lg:-right-24 p-2 sm:p-2 lg:p-4 rounded-xl backdrop-blur-sm bg-black/20 
 						shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/10 
-						w-[240px] sm:w-[380px] md:w-[400px]">
+						w-[240px] sm:w-[260px] lg:w-[400px]">
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{
@@ -141,12 +141,12 @@ const Photo: React.FC = () => {
 												end={stat.num}
 												duration={2}
 												delay={0}
-												className="text-2xl sm:text-4xl xl:text-6xl font-extrabold text-white/90"
+												className="text-2xl lg:text-4xl xl:text-6xl font-extrabold text-white/90"
 											/>
 											{stat.loading && (
 												<span className="absolute top-[12px] right-2 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
 											)}
-											<p className="text-white/70 flex-1 text-right text-xs sm:text-base">
+											<p className="text-white/70 flex-1 text-right text-xs lg:text-base leading-snug">
 												{stat.text}
 											</p>
 										</div>
