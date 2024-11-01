@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { getGithubStats } from "@/utils/github";
 import { motion } from "framer-motion";
+import { username } from "@/utils/github";
 
 const Stats: React.FC = () => {
 	const [githubStats, setGithubStats] = useState({
@@ -16,7 +17,11 @@ const Stats: React.FC = () => {
 	const fetchStats = async () => {
 		try {
 			setIsLoading(true);
-			const stats = await getGithubStats("sudsarkar13");
+			// Add type check for username before calling API
+			if (!username) {
+				throw new Error("Username is required");
+			}
+			const stats = await getGithubStats(username);
 			setGithubStats({
 				commitCount: stats.totalCommits,
 				collaborations: stats.collaborations,
@@ -34,9 +39,6 @@ const Stats: React.FC = () => {
 		const intervalId = setInterval(fetchStats, 10000);
 		return () => clearInterval(intervalId);
 	}, []);
-
-	const currentYear = new Date().getFullYear();
-	const yearsOnGitHub = currentYear - githubStats.joinedYear;
 
 	const stats = [
 		{
