@@ -43,7 +43,7 @@ const Stats: React.FC = () => {
 			text: "Years of Experience",
 		},
 		{
-			num: 5,
+			num: 4,
 			text: "Projects Completed",
 		},
 		{
@@ -74,13 +74,13 @@ const Stats: React.FC = () => {
 									className={`text-4xl xl:text-6xl font-extrabold`}
 								/>
 								{stat.loading && (
-									<span className="absolute -top-4 -right-4 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+									<span className="absolute top-4 md:-top-4 -right-28 md:-right-24 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
 								)}
 							</div>
 							<p
 								className={`${
 									stat.text.length < 15 ? "max-w-[100px]" : "max-w-[150px]"
-								}`}>
+								} leading-snug text-white/80`}>
 								{stat.text}
 							</p>
 						</div>
