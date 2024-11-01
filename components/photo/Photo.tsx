@@ -119,7 +119,7 @@ const Photo: React.FC = () => {
 					}}
 					className="absolute -bottom-2 -md:bottom-24 lg:bottom-0 -right-6 md:-right-24 lg:-right-24 p-2 sm:p-2 lg:p-4 rounded-xl backdrop-blur-sm bg-black/20 
 						shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/10 
-						w-[240px] sm:w-[260px] lg:w-[400px]">
+						w-[240px] sm:w-[260px] lg:w-[280px] xl:w-[400px]">
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{
@@ -136,17 +136,17 @@ const Photo: React.FC = () => {
 									key={index}
 									className="flex items-center">
 									<div className="w-full">
-										<div className="flex flex-row gap-1.5 sm:gap-6 items-center justify-between">
+										<div className="flex flex-row gap-1.5 xl:gap-6 items-center justify-between">
 											<CountUp
 												end={stat.num}
 												duration={2}
 												delay={0}
-												className="text-2xl lg:text-4xl xl:text-6xl font-extrabold text-white/90"
+												className="text-2xl xl:text-6xl font-extrabold text-white/90"
 											/>
 											{stat.loading && (
 												<span className="absolute top-[12px] right-2 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
 											)}
-											<p className="text-white/70 flex-1 text-right text-xs lg:text-base leading-snug">
+											<p className="text-white/70 flex-1 text-right text-xs xl:text-base leading-snug">
 												{stat.text}
 											</p>
 										</div>
