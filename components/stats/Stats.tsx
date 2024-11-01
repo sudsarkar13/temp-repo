@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { getGithubStats } from "@/utils/github";
+import { motion } from "framer-motion";
 
 const Stats: React.FC = () => {
 	const [githubStats, setGithubStats] = useState({
@@ -59,11 +60,21 @@ const Stats: React.FC = () => {
 
 	return (
 		<main className={`container mx-auto`}>
-			<div
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{
+					opacity: 1,
+					transition: { delay: 2, duration: 0.4, ease: "easeIn" },
+				}}
 				className={`flex flex-wrap gap-6 max-w-[80vw] mx-auto xl:max-w-none pb-4`}>
 				{stats.map((stat, index) => {
 					return (
-						<div
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{
+								opacity: 1,
+								transition: { delay: 2.4, duration: 0.4, ease: "easeInOut" },
+							}}
 							key={index}
 							className={`flex-1 flex gap-4 items-center justify-center xl:justify-start`}>
 							<div className="relative">
@@ -83,10 +94,10 @@ const Stats: React.FC = () => {
 								} leading-snug text-white/80`}>
 								{stat.text}
 							</p>
-						</div>
+						</motion.div>
 					);
 				})}
-			</div>
+			</motion.div>
 		</main>
 	);
 };
