@@ -6,6 +6,8 @@ interface GitHubStats {
   joinedYear: number;
 }
 
+export const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
+
 export async function getGithubStats(username: string): Promise<GitHubStats> {
   try {
     const query = `
