@@ -13,10 +13,21 @@ const Home: React.FC = () => {
 	return (
 		<section className={`h-full`}>
 			<div className={`container mx-auto`}>
-				<div
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{
+						opacity: 1,
+						transition: { delay: 2, duration: 0.4, ease: "easeIn" },
+					}}
 					className={`flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24`}>
 					{/* text */}
-					<div className={`text-center xl:text-left order-2 xl:order-none`}>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{
+							opacity: 1,
+							transition: { delay: 2.4, duration: 0.4, ease: "easeInOut" },
+						}}
+						className={`text-center xl:text-left order-2 xl:order-none`}>
 						<span className={`text-base xl:text-xl`}>
 							Frontend Web Developer
 						</span>
@@ -60,12 +71,12 @@ const Home: React.FC = () => {
 								/>
 							</div>
 						</motion.div>
-					</div>
+					</motion.div>
 					{/* photo */}
 					<div className={`order-1 xl:order-none mb-8 xl:mb-0`}>
 						<Photo />
 					</div>
-				</div>
+				</motion.div>
 				{/* stats */}
 				<div>
 					<Stats />
