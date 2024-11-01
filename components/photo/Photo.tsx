@@ -6,6 +6,7 @@ import Image from "next/image";
 import CountUp from "react-countup";
 import { getGithubStats } from "@/utils/github";
 import { Github } from "lucide-react";
+import { username } from "@/utils/github";
 
 const Photo: React.FC = () => {
 	const [githubStats, setGithubStats] = useState({
@@ -17,7 +18,11 @@ const Photo: React.FC = () => {
 	const fetchStats = async () => {
 		try {
 			setIsLoading(true);
-			const stats = await getGithubStats("sudsarkar13");
+			// Add type check for username before calling API
+			if (!username) {
+				throw new Error("Username is required");
+			}
+			const stats = await getGithubStats(username);
 			setGithubStats({
 				collaborations: stats.collaborations,
 				joinedYear: stats.joinedYear,
