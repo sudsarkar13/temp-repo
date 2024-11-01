@@ -109,7 +109,7 @@ export async function getGithubStats(username: string): Promise<GitHubStats> {
       joinedYear
     };
   } catch (error) {
-    console.error('Error fetching GitHub stats:', error);
+    // console.error('Error fetching GitHub stats:', error);
     return {
       totalCommits: 0,
       collaborations: 0,
