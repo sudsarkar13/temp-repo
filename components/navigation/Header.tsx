@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Button, SidebarProvider } from "@/components/ui";
+import { Button } from "@/components/ui";
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
 
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
 
 					{/* mobile nav */}
 					<div className={`xl:hidden`}>
-							<MobileNav />
+						<MobileNav />
 					</div>
 				</div>
 			</header>
