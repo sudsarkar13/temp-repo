@@ -3,9 +3,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Briefcase, GraduationCap } from "lucide-react";
-import { FaHtml5, FaCss3, FaReact, FaNodeJs } from "react-icons/fa";
+import { Briefcase, Code2, GraduationCap } from "lucide-react";
+import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs } from "react-icons/fa";
 import { SiMongodb, SiTailwindcss, SiNextdotjs } from "react-icons/si";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Automate Experience Year/Month Increment function.
 const startDate = new Date(2024, 3); // March 2024
@@ -96,12 +104,13 @@ const education = {
 	icon: <GraduationCap />,
 	title: "My Education",
 	description: "",
-  items: [
+	items: [
 		{
-			institution: "Kalinga Institute of Industrial Technology - KIIT University, Bhubaneswar, Odisha",
+			institution:
+				"Kalinga Institute of Industrial Technology - KIIT University, Bhubaneswar, Odisha",
 			degree: "B.Tech in Computer Science and Engineering",
 			duration: "2021 - 2024",
-    },
+		},
 		{
 			institution: "KIIT Polytechnic, Bhubaneswar, Odisha",
 			degree: "Diploma in Computer Science and Engineering",
@@ -111,6 +120,47 @@ const education = {
 			institution: "D.A.V. Public School, CDA, Bidanasi, Cuttack, Odisha",
 			degree: "Matriculation",
 			duration: "2016 - 2017",
+		},
+	],
+};
+
+// Skills Data
+const skills = {
+	icon: <Code2 />,
+	title: "My Skills",
+	description: "",
+	item: [
+		{
+			icon: <FaHtml5 />,
+			name: "HTML",
+		},
+		{
+			icon: <FaCss3 />,
+			name: "CSS",
+		},
+		{
+			icon: <FaJs />,
+			name: "JavaScript",
+		},
+		{
+			icon: <FaReact />,
+			name: "React Js",
+		},
+		{
+			icon: <FaNodeJs />,
+			name: "Node Js",
+		},
+		{
+			icon: <SiMongodb />,
+			name: "MongoDB",
+		},
+		{
+			icon: <SiTailwindcss />,
+			name: "Tailwind CSS",
+		},
+		{
+			icon: <SiNextdotjs />,
+			name: "Next Js",
 		},
 	],
 };
