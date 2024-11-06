@@ -168,7 +168,39 @@ const skills = {
 const ResumePage: React.FC = () => {
 	return (
 		<main>
-			<div>Resume Page</div>
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{
+					opacity: 1,
+					transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+				}}
+				className={`min-h-[80vh] flex items-center justify-center py-12 xl:py-0`}>
+				<div className={`container mx-auto`}>
+					<Tabs
+						defaultValue="about"
+						className={`flex flex-col lg:flex-row gap-[60px]`}>
+						<TabsList
+							className={`flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6`}>
+							<TabsTrigger value="about">About Me</TabsTrigger>
+							<TabsTrigger value="education">Education</TabsTrigger>
+							<TabsTrigger value="experience">Experience</TabsTrigger>
+							<TabsTrigger value="skills">Skills</TabsTrigger>
+						</TabsList>
+
+						{/* content */}
+						<div className={`min-h-[70vh] w-full`}>
+							{/* About */}
+							<TabsContent value="about" className={`w-full`}>About Me</TabsContent>
+							{/* Education */}
+							<TabsContent value="education" className={`w-full`}>Education</TabsContent>
+							{/* Experience */}
+							<TabsContent value="experience" className={`w-full`}>Experience</TabsContent>
+							{/* Skills */}
+							<TabsContent value="skills" className={`w-full`}>Skills</TabsContent>
+						</div>
+					</Tabs>
+				</div>
+			</motion.div>
 		</main>
 	);
 };
