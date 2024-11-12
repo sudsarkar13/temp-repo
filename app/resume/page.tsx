@@ -89,7 +89,7 @@ const experience = {
 	icon: <Briefcase className={`w-10 h-10`} />,
 	title: "My Experience",
 	description:
-		"A highly motivated individual with the ability to work well in groups as well as manage tasks individually within tight time frames when needed.",
+		"My professional journey spans diverse roles in software development, from hands-on system engineering to technical leadership. I bring a blend of technical expertise and strategic thinking to deliver innovative solutions that drive business growth.",
 	items: [
 		{
 			company: "Healthunity Solutions Pvt Ltd",
@@ -198,7 +198,7 @@ const ResumePage: React.FC = () => {
 				className={`min-h-[80vh] flex items-center justify-center py-12 xl:py-0`}>
 				<div className={`container mx-auto`}>
 					<Tabs
-						defaultValue="skills"
+						defaultValue="about"
 						className={`flex flex-col lg:flex-row gap-[60px]`}>
 						<TabsList
 							className={`flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6`}>
@@ -318,7 +318,8 @@ const ResumePage: React.FC = () => {
 												<li key={index}>
 													<TooltipProvider delayDuration={100}>
 														<Tooltip>
-															<TooltipTrigger className={`w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group`}>
+															<TooltipTrigger
+																className={`w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group`}>
 																<div
 																	className={`text-6xl group-hover:text-accent transition-all duration-300`}>
 																	{skill.icon}
