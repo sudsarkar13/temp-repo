@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Briefcase, Code2, GraduationCap } from "lucide-react";
+import { Briefcase, Code2, GraduationCap, User } from "lucide-react";
 import { FaHtml5, FaCss3, FaJs, FaReact, FaNodeJs } from "react-icons/fa";
 import { SiMongodb, SiTailwindcss, SiNextdotjs } from "react-icons/si";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -36,6 +36,7 @@ const calculateExperience = () => {
 
 // About data
 const data = {
+	icon: <User className={`w-10 h-10`} />,
 	title: "About Me",
 	description:
 		"I am a full stack developer with a passion for creating web applications that are both functional and aesthetically pleasing. I have experience with a variety of programming languages and frameworks, including JavaScript, React, Node.js, and MongoDB. I am a quick learner and always looking for new challenges to tackle.",
@@ -85,15 +86,20 @@ const data = {
 
 // Experience Data
 const experience = {
-	icon: <Briefcase />,
+	icon: <Briefcase className={`w-10 h-10`} />,
 	title: "My Experience",
 	description:
-		"Seeking a position in a company where I can launch my career, make the best use of my potential, and contribute to the company’s growth. A highly motivated individual with the ability to work well in groups as well as manage tasks individually within tight time frames when needed.",
+		"A highly motivated individual with the ability to work well in groups as well as manage tasks individually within tight time frames when needed.",
 	items: [
 		{
 			company: "Healthunity Solutions Pvt Ltd",
-			position: "CTO & Frontend Developer Lead",
-			duration: "Mar 2024 - Present",
+			position: "CTO",
+			duration: "Jun 2024 - Present",
+		},
+		{
+			company: "Healthunity Solutions Pvt Ltd",
+			position: "Frontend Developer Lead",
+			duration: "Mar 2024 - May 2024",
 		},
 		{
 			company: "ProU Education",
@@ -110,7 +116,7 @@ const experience = {
 
 // Education Data
 const education = {
-	icon: <GraduationCap />,
+	icon: <GraduationCap className={`w-10 h-10`} />,
 	title: "My Education",
 	description: "",
 	items: [
@@ -135,7 +141,7 @@ const education = {
 
 // Skills Data
 const skills = {
-	icon: <Code2 />,
+	icon: <Code2 className={`w-10 h-10`} />,
 	title: "My Skills",
 	description: "",
 	item: [
@@ -210,7 +216,11 @@ const ResumePage: React.FC = () => {
 							<TabsContent value="experience" className={`w-full`}>
 								<div
 									className={`flex flex-col gap-[30px] text-center xl:text-left`}>
-									<h3 className={`text-4xl font-bold`}>{experience.title}</h3>
+									<div
+										className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
+										{experience.icon}
+										<h3 className={`font-bold`}>{experience.title}</h3>
+									</div>
 									<p className={`max-w-[600px] text-white/60 mx-auto xl:mx-0 `}>
 										{experience.description}
 									</p>
@@ -219,7 +229,9 @@ const ResumePage: React.FC = () => {
 											className={`grid grid-cols-1 lg:grid-cols-2 gap-[30px]`}>
 											{experience.items.map((item, index) => {
 												return (
-													<li key={index}>
+													<li
+														key={index}
+														className={`bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1`}>
 														<span>{item.duration}</span>
 														<h3>{item.position}</h3>
 														<div>
