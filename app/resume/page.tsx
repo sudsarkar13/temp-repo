@@ -123,23 +123,23 @@ const education = {
 	items: [
 		{
 			institution: "KIIT University, Bhubaneswar, Odisha",
-			degree: "B.Tech in Computer Science and Engineering",
+			degree: "B.Tech in CSE",
 			duration: "2021 - 2024",
 		},
 		{
 			institution: "KIIT Polytechnic, Bhubaneswar, Odisha",
-			degree: "Diploma in Computer Science and Engineering",
+			degree: "Diploma in CSE",
 			duration: "2018 - 2021",
 		},
 		{
 			institution: "D.A.V. Public School, CDA, Bidanasi, Cuttack, Odisha",
 			degree: "9th & Matriculation",
-			duration: "2016 - 2017",
+			duration: "2014 - 2016",
 		},
 		{
 			institution: "D.A.V. Public School, Rajabagicha, Cuttack, Odisha",
 			degree: "Nursery - 8th",
-			duration: "2009 - 2014",
+			duration: "2004 - 2014",
 		},
 	],
 };
@@ -148,8 +148,9 @@ const education = {
 const skills = {
 	icon: <Code2 className={`w-10 h-10`} />,
 	title: "My Skills",
-	description: "",
-	item: [
+	description:
+		"Mastering the art of coding with a diverse tech stack - where creativity meets functionality. Each skill represents a tool in my arsenal for crafting exceptional digital experiences.",
+	skillList: [
 		{
 			icon: <FaHtml5 />,
 			name: "HTML",
@@ -197,7 +198,7 @@ const ResumePage: React.FC = () => {
 				className={`min-h-[80vh] flex items-center justify-center py-12 xl:py-0`}>
 				<div className={`container mx-auto`}>
 					<Tabs
-						defaultValue="education"
+						defaultValue="skills"
 						className={`flex flex-col lg:flex-row gap-[60px]`}>
 						<TabsList
 							className={`flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6`}>
@@ -219,7 +220,7 @@ const ResumePage: React.FC = () => {
 									className={`flex flex-col gap-[30px] text-center xl:text-left`}>
 									<div
 										className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
-										{education.icon}
+										<span className={`text-accent`}>{education.icon}</span>
 										<h3 className={`font-bold`}>{education.title}</h3>
 									</div>
 									<p className={`max-w-[650px] text-white/60 mx-auto xl:mx-0 `}>
@@ -228,7 +229,7 @@ const ResumePage: React.FC = () => {
 									<ScrollArea className={`h-[400px]`}>
 										<ul
 											className={`grid grid-cols-1 lg:grid-cols-2 gap-[30px]`}>
-											{experience.items.map((item, index) => {
+											{education.items.map((item, index) => {
 												return (
 													<li
 														key={index}
@@ -238,13 +239,15 @@ const ResumePage: React.FC = () => {
 														</span>
 														<h3
 															className={`text-xl max-w-[260px] min-h-[60px] text-center lg:text-left`}>
-															{item.position}
+															{item.degree}
 														</h3>
 														<div className={`flex items-center gap-3`}>
 															{/* dot */}
 															<span
 																className={`w-[6px] h-[6px] bg-accent rounded-full animate-pulse`}></span>
-															<p className={`text-white/60`}>{item.company}</p>
+															<p className={`text-white/60`}>
+																{item.institution}
+															</p>
 														</div>
 													</li>
 												);
@@ -259,7 +262,7 @@ const ResumePage: React.FC = () => {
 									className={`flex flex-col gap-[30px] text-center xl:text-left`}>
 									<div
 										className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
-										{experience.icon}
+										<span className={`text-accent`}>{experience.icon}</span>
 										<h3 className={`font-bold`}>{experience.title}</h3>
 									</div>
 									<p className={`max-w-[650px] text-white/60 mx-auto xl:mx-0 `}>
@@ -294,8 +297,22 @@ const ResumePage: React.FC = () => {
 								</div>
 							</TabsContent>
 							{/* Skills */}
-							<TabsContent value="skills" className={`w-full`}>
-								Skills
+							<TabsContent value="skills" className={`w-full h-full`}>
+								<div className={`flex flex-col gap-[30px]`}>
+									<div>
+										<div
+											className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
+											<span className={`text-accent`}>{skills.icon}</span>
+											<h3>{skills.title}</h3>
+										</div>
+										<p>{skills.description}</p>
+									</div>
+									<ul>
+										{skills.skillList.map((skill, index) => {
+											return <li key={index}></li>;
+										})}
+									</ul>
+								</div>
 							</TabsContent>
 						</div>
 					</Tabs>
