@@ -98,12 +98,12 @@ const experience = {
 		},
 		{
 			company: "Healthunity Solutions Pvt Ltd",
-			position: "Frontend Developer Lead",
+			position: "Frontend Developer",
 			duration: "Mar 2024 - May 2024",
 		},
 		{
 			company: "ProU Education",
-			position: "Campus Ambassador KIIT University",
+			position: "Campus Ambassador, KIIT University",
 			duration: "Apr 2023 - Nov 2023",
 		},
 		{
@@ -118,11 +118,11 @@ const experience = {
 const education = {
 	icon: <GraduationCap className={`w-10 h-10`} />,
 	title: "My Education",
-	description: "",
+	description:
+		"My educational journey has been a journey of self-discovery and growth, and I am grateful for every opportunity I have had to learn and grow.",
 	items: [
 		{
-			institution:
-				"Kalinga Institute of Industrial Technology - KIIT University, Bhubaneswar, Odisha",
+			institution: "KIIT University, Bhubaneswar, Odisha",
 			degree: "B.Tech in Computer Science and Engineering",
 			duration: "2021 - 2024",
 		},
@@ -133,8 +133,13 @@ const education = {
 		},
 		{
 			institution: "D.A.V. Public School, CDA, Bidanasi, Cuttack, Odisha",
-			degree: "Matriculation",
+			degree: "9th & Matriculation",
 			duration: "2016 - 2017",
+		},
+		{
+			institution: "D.A.V. Public School, Rajabagicha, Cuttack, Odisha",
+			degree: "Nursery - 8th",
+			duration: "2009 - 2014",
 		},
 	],
 };
@@ -192,7 +197,7 @@ const ResumePage: React.FC = () => {
 				className={`min-h-[80vh] flex items-center justify-center py-12 xl:py-0`}>
 				<div className={`container mx-auto`}>
 					<Tabs
-						defaultValue="about"
+						defaultValue="education"
 						className={`flex flex-col lg:flex-row gap-[60px]`}>
 						<TabsList
 							className={`flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6`}>
@@ -210,7 +215,43 @@ const ResumePage: React.FC = () => {
 							</TabsContent>
 							{/* Education */}
 							<TabsContent value="education" className={`w-full`}>
-								Education
+								<div
+									className={`flex flex-col gap-[30px] text-center xl:text-left`}>
+									<div
+										className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
+										{education.icon}
+										<h3 className={`font-bold`}>{education.title}</h3>
+									</div>
+									<p className={`max-w-[650px] text-white/60 mx-auto xl:mx-0 `}>
+										{education.description}
+									</p>
+									<ScrollArea className={`h-[400px]`}>
+										<ul
+											className={`grid grid-cols-1 lg:grid-cols-2 gap-[30px]`}>
+											{experience.items.map((item, index) => {
+												return (
+													<li
+														key={index}
+														className={`bg-[#232329] h-[184px] py-6 px-6 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1`}>
+														<span className={`text-accent`}>
+															{item.duration}
+														</span>
+														<h3
+															className={`text-xl max-w-[260px] min-h-[60px] text-center lg:text-left`}>
+															{item.position}
+														</h3>
+														<div className={`flex items-center gap-3`}>
+															{/* dot */}
+															<span
+																className={`w-[6px] h-[6px] bg-accent rounded-full animate-pulse`}></span>
+															<p className={`text-white/60`}>{item.company}</p>
+														</div>
+													</li>
+												);
+											})}
+										</ul>
+									</ScrollArea>
+								</div>
 							</TabsContent>
 							{/* Experience */}
 							<TabsContent value="experience" className={`w-full`}>
@@ -221,7 +262,7 @@ const ResumePage: React.FC = () => {
 										{experience.icon}
 										<h3 className={`font-bold`}>{experience.title}</h3>
 									</div>
-									<p className={`max-w-[600px] text-white/60 mx-auto xl:mx-0 `}>
+									<p className={`max-w-[650px] text-white/60 mx-auto xl:mx-0 `}>
 										{experience.description}
 									</p>
 									<ScrollArea className={`h-[400px]`}>
@@ -231,12 +272,19 @@ const ResumePage: React.FC = () => {
 												return (
 													<li
 														key={index}
-														className={`bg-[#232329] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1`}>
-														<span>{item.duration}</span>
-														<h3>{item.position}</h3>
-														<div>
-															<span></span>
-															<p>{item.company}</p>
+														className={`bg-[#232329] h-[184px] py-6 px-6 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1`}>
+														<span className={`text-accent`}>
+															{item.duration}
+														</span>
+														<h3
+															className={`text-xl max-w-[260px] min-h-[60px] text-center lg:text-left`}>
+															{item.position}
+														</h3>
+														<div className={`flex items-center gap-3`}>
+															{/* dot */}
+															<span
+																className={`w-[6px] h-[6px] bg-accent rounded-full animate-pulse`}></span>
+															<p className={`text-white/60`}>{item.company}</p>
 														</div>
 													</li>
 												);
