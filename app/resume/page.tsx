@@ -51,35 +51,35 @@ const about = {
 		"Frontend developer with an eye for detail and a passion for creating beautiful, intuitive user interfaces. Committed to crafting pixel-perfect experiences while staying current with emerging frontend trends and best practices.",
 	info: [
 		{
-			fieldName: "Name",
+			fieldName: "Name:",
 			fieldValue: "Sudeepta Sarkar",
 		},
 		{
-			fieldName: "Email",
+			fieldName: "Email:",
 			fieldValue: "sudsarkar13@gmail.com",
 		},
 		{
-			fieldName: "Phone",
+			fieldName: "Phone:",
 			fieldValue: "+91 7504614781",
 		},
 		{
-			fieldName: "Address",
+			fieldName: "Address:",
 			fieldValue: "P.C. Sarkar Lane, Arunodaya Nagar, Cuttack, Odisha, India",
 		},
 		{
-			fieldName: "Experience",
+			fieldName: "Experience:",
 			fieldValue: calculateExperience(),
 		},
 		{
-			fieldName: "Nationality",
+			fieldName: "Nationality:",
 			fieldValue: "Indian",
 		},
 		{
-			fieldName: "Freelance",
+			fieldName: "Freelance:",
 			fieldValue: "Available",
 		},
 		{
-			fieldName: "Languages",
+			fieldName: "Languages:",
 			fieldValue: "Bengali, English, Hindi, Odia",
 		},
 	],
@@ -229,9 +229,11 @@ const ResumePage: React.FC = () => {
 											className={`grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0`}>
 											{about.info.map((item, index) => {
 												return (
-													<li key={index}>
-														<span>{item.fieldName}</span>
-														<span>{item.fieldValue}</span>
+													<li
+														key={index}
+														className={`flex items-center justify-center xl:justify-start gap-4`}>
+														<span className={`text-white/60`}>{item.fieldName}</span>
+														<span className={`text-md`}>{item.fieldValue}</span>
 													</li>
 												);
 											})}
