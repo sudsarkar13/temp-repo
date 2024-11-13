@@ -71,6 +71,7 @@ const Stats: React.FC = () => {
 		{
 			num: experience.value,
 			text: `${experience.unit} of Experience`,
+			showPlus: experience.unit === 'Years'
 		},
 		{
 			num: 4,
@@ -113,12 +114,17 @@ const Stats: React.FC = () => {
 									key={index}
 									className={`flex-1 flex gap-4 items-center justify-center xl:justify-start`}>
 									<div className="relative">
-										<CountUp
-											end={stat.num}
-											duration={2}
-											delay={0}
-											className={`text-4xl xl:text-6xl font-extrabold`}
-										/>
+										<div className="flex items-center">
+											<CountUp
+												end={stat.num}
+												duration={2}
+												delay={0}
+												className={`text-4xl xl:text-6xl font-extrabold`}
+											/>
+											{stat.showPlus && (
+												<span className="text-4xl xl:text-6xl font-extrabold">+</span>
+											)}
+										</div>
 										{stat.loading && (
 											<span className="absolute top-4 md:-top-4 -right-28 md:-right-24 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
 										)}
