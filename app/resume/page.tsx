@@ -19,6 +19,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const startDate = new Date(2024, 3); // March 2024
 const currentDate = new Date();
 
+// Calculates years and months of experience
+// Returns formatted string like "2+ Years 3 Months" or "5 Months"
+
 const calculateExperience = () => {
 	const years = currentDate.getFullYear() - startDate.getFullYear();
 	const months = currentDate.getMonth() - startDate.getMonth();
@@ -26,6 +29,12 @@ const calculateExperience = () => {
 	let totalMonths = years * 12 + months;
 	if (totalMonths < 0) totalMonths += 12;
 
+	// If less than 12 months, show only months
+	if (totalMonths < 12) {
+		return `${totalMonths} Months`;
+	}
+
+	// If 12 months or more, show years and months
 	const experienceYears = Math.floor(totalMonths / 12);
 	const experienceMonths = totalMonths % 12;
 
@@ -35,11 +44,11 @@ const calculateExperience = () => {
 };
 
 // About data
-const data = {
+const about = {
 	icon: <User className={`w-10 h-10`} />,
 	title: "About Me",
 	description:
-		"I am a full stack developer with a passion for creating web applications that are both functional and aesthetically pleasing. I have experience with a variety of programming languages and frameworks, including JavaScript, React, Node.js, and MongoDB. I am a quick learner and always looking for new challenges to tackle.",
+		"Frontend developer with an eye for detail and a passion for creating beautiful, intuitive user interfaces. Committed to crafting pixel-perfect experiences while staying current with emerging frontend trends and best practices.",
 	info: [
 		{
 			fieldName: "Name",
@@ -56,14 +65,6 @@ const data = {
 		{
 			fieldName: "Address",
 			fieldValue: "P.C. Sarkar Lane, Arunodaya Nagar, Cuttack, Odisha, India",
-		},
-		{
-			fieldName: "LinkedIn",
-			fieldValue: "https://www.linkedin.com/in/sudeepta-sarkar",
-		},
-		{
-			fieldName: "Github",
-			fieldValue: "https://github.com/sudsarkar13",
 		},
 		{
 			fieldName: "Experience",
@@ -211,8 +212,32 @@ const ResumePage: React.FC = () => {
 						{/* content */}
 						<div className={`min-h-[70vh] w-full`}>
 							{/* About */}
-							<TabsContent value="about" className={`w-full`}>
-								About Me
+							<TabsContent
+								value="about"
+								className={`w-full text-center xl:text-left`}>
+								<div className={`flex flex-col gap-[30px] `}>
+									<div
+										className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
+										<span className={`text-accent`}>{about.icon}</span>
+										<h3 className={`font-bold`}>{about.title}</h3>
+									</div>
+									<p className={`max-w-[600px] text-white/60 mx-auto xl:mx-0`}>
+										{about.description}
+									</p>
+									<ScrollArea className={`h-[480px]`}>
+										<ul
+											className={`grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0`}>
+											{about.info.map((item, index) => {
+												return (
+													<li key={index}>
+														<span>{item.fieldName}</span>
+														<span>{item.fieldValue}</span>
+													</li>
+												);
+											})}
+										</ul>
+									</ScrollArea>
+								</div>
 							</TabsContent>
 							{/* Education */}
 							<TabsContent value="education" className={`w-full`}>
@@ -304,7 +329,7 @@ const ResumePage: React.FC = () => {
 										<div
 											className={`flex flex-col lg:flex-row items-center gap-8 text-4xl`}>
 											<span className={`text-accent`}>{skills.icon}</span>
-											<h3 className={`text-4xl font-bold`}>{skills.title}</h3>
+											<h3 className={`font-bold`}>{skills.title}</h3>
 										</div>
 										<p
 											className={`max-w-[600px] text-white/60 mx-auto xl:mx-0`}>
