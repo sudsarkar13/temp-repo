@@ -40,10 +40,37 @@ const Stats: React.FC = () => {
 		return () => clearInterval(intervalId);
 	}, []);
 
+	const calculateExperience = () => {
+		const startDate = new Date(2024, 3); // March 2024 (month is 0-based)
+		const currentDate = new Date();
+
+		const years = currentDate.getFullYear() - startDate.getFullYear();
+		const months = currentDate.getMonth() - startDate.getMonth();
+
+		let totalMonths = years * 12 + months;
+		if (totalMonths < 0) totalMonths = 0;
+
+		// If less than 12 months, return months value and unit
+		if (totalMonths < 12) {
+			return {
+				value: totalMonths,
+				unit: "Months",
+			};
+		}
+
+		// If 12 months or more, return years value and unit
+		const experienceYears = Math.floor(totalMonths / 12);
+		return {
+			value: experienceYears,
+			unit: "Years",
+		};
+	};
+
+	const experience = calculateExperience();
 	const stats = [
 		{
-			num: 2,
-			text: "Years of Experience",
+			num: experience.value,
+			text: `${experience.unit} of Experience`,
 		},
 		{
 			num: 4,
