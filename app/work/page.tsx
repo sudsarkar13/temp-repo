@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
-
+import WorkSliderBtns from "@/components/buttons/WorkSliderBtns";
 const projects = [
 	{
 		num: "01",
@@ -92,10 +92,16 @@ const WorkPage: React.FC = () => {
 								{project.num}
 							</div>
 							{/* project category */}
-							<h2
-								className={` text-[30px] xl:text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500`}>
-								{project.category} Project
-							</h2>
+							<div className={`flex flex-col gap-2`}>
+								<h1
+									className={`order-2 text-[30px] xl:text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500`}>
+									{project.title}
+								</h1>
+								<h2
+									className={`order-1 text-[16px] xl:text-[18px] font-bold leading-none text-white/60 group-hover:text-accent transition-all duration-500`}>
+									{project.category} Project
+								</h2>
+							</div>
 							{/* project description */}
 							<p className={`text-white/60 `}>{project.description}</p>
 							{/* stack */}
@@ -162,7 +168,8 @@ const WorkPage: React.FC = () => {
 										<div
 											className={`h-[320px] md:h-[460px] relative group flex justify-center items-center bg-pink-50/5`}>
 											{/* overlay */}
-											<div></div>
+											<div
+												className={`absolute top-0 bottom-0 w-full h-full bg-black/10 z-10`}></div>
 											{/* image */}
 											<div className={`relative w-full h-full`}>
 												<Image
@@ -176,6 +183,12 @@ const WorkPage: React.FC = () => {
 									</SwiperSlide>
 								);
 							})}
+							{/* Slider Buttons */}
+							<WorkSliderBtns
+								containerStyles={`flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none`}
+								btnStyles={`bg-accent hover:bg-accent-hover text-primary text-[22px] w-[35px] h-[35px] flex justify-center items-center rounded-full shadow-lg transition-all duration-500`}
+								iconStyles={`text-3xl`}
+							/>
 						</Swiper>
 					</div>
 				</div>
