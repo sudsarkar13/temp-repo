@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import WorkSliderBtns from "@/components/buttons/WorkSliderBtns";
+
 const projects = [
 	{
 		num: "01",
@@ -21,7 +22,11 @@ const projects = [
 		title: "Lenovo Dark Grub 4K",
 		description:
 			"A shellscript tool to seamlessly setup a fully optimized Ubuntu Desktop for web development.",
-		stack: [{ name: "Ubuntu" }, { name: "Shellscript" }],
+		stack: [
+			{ name: "Ubuntu" },
+			{ name: "Shellscript" },
+			{ name: "Open Source" },
+		],
 		image: "/assets/projects/p1.png",
 		live: "",
 		github: "https://github.com/sudsarkar13/Lenovo-dark-grub-4k-ubuntu",
