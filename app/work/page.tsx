@@ -22,13 +22,9 @@ const projects = [
 		title: "Lenovo Dark Grub 4K",
 		description:
 			"A shellscript tool to seamlessly setup a fully optimized Ubuntu Desktop for web development.",
-		stack: [
-			{ name: "Ubuntu" },
-			{ name: "Shellscript" },
-			{ name: "Open Source" },
-		],
+		stack: [{ name: "Ubuntu" }, { name: "GRUB" }, { name: "Open Source" }],
 		image: "/assets/projects/p1.png",
-		live: "",
+		live: "https://www.gnome-look.org/p/1941975",
 		github: "https://github.com/sudsarkar13/Lenovo-dark-grub-4k-ubuntu",
 	},
 	{
@@ -40,7 +36,8 @@ const projects = [
 		stack: [
 			{ name: "Ubuntu" },
 			{ name: "Shellscript" },
-			{ name: "Web Development" },
+			{ name: "Setup Tool" },
+			{ name: "Open Source" },
 		],
 		image: "/assets/projects/p2.png",
 		live: "",
@@ -54,18 +51,18 @@ const projects = [
 		description: "A website for consulting and booking appointments.",
 		stack: [{ name: "Next.Js" }, { name: "Tailwind CSS" }, { name: "Shadcn" }],
 		image: "/assets/projects/p3.png",
-		live: "",
+		live: "https://dreach.in",
 		github: "",
 	},
 	{
 		num: "04",
-		category: "Frontend",
+		category: "Full Stack",
 		title: "Portfolio Website",
 		description:
 			"A personal portfolio website built with Next.js, Shadcn, and Tailwind CSS.",
 		stack: [{ name: "Next.js" }, { name: "Shadcn" }, { name: "Tailwind CSS" }],
 		image: "/assets/projects/p4.png",
-		live: "",
+		live: "https://sudeeptasarkar.in",
 		github: "https://github.com/sudsarkar13/personal-portfolio",
 	},
 ];
@@ -110,7 +107,7 @@ const WorkPage: React.FC = () => {
 							{/* project description */}
 							<p className={`text-white/60 `}>{project.description}</p>
 							{/* stack */}
-							<ul className={`flex gap-4`}>
+							<ul className={`flex flex-wrap gap-4`}>
 								{project.stack.map((item, index) => {
 									return (
 										<li
