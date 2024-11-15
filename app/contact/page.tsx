@@ -109,7 +109,7 @@ const ContactPage: React.FC = () => {
 										</div>
 										<div className={`flex-1`}>
 											<p className={`text-white/60`}>{item.title}</p>
-											<h3 className={`text-xl flex flex-wrap`}>
+											<h3 className={`text-lg xl:text-xl flex flex-wrap`}>
 												{item.description}
 											</h3>
 										</div>
