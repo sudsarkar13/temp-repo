@@ -12,6 +12,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const iconStyles = `text-[20px] text-accent`;
 
@@ -36,9 +37,24 @@ const info = [
 
 const ContactPage: React.FC = () => {
 	return (
-		<main>
-			<div>Contact Page</div>
-		</main>
+		<motion.section
+			initial={{ opacity: 0 }}
+			animate={{
+				opacity: 1,
+				transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+			}}
+			className={`py-6`}>
+			<div className={`container mx-auto`}>
+				<div>
+					{/* form */}
+					<div>
+						<form>form</form>
+					</div>
+					{/* info */}
+					<div>info</div>
+				</div>
+			</div>
+		</motion.section>
 	);
 };
 
