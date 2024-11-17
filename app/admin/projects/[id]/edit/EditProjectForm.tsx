@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { IProject } from '@/models/Project';
+import { Types } from 'mongoose';
 
 type ProjectData = {
   title: string;
@@ -36,7 +37,7 @@ export default function EditProjectForm({ project: initialProject }: EditProject
 
   // Convert mongoose document to plain object
   const initialData: ProjectData = {
-    _id: initialProject._id,
+    _id: initialProject._id.toString(),
     title: initialProject.title,
     description: initialProject.description,
     technologies: initialProject.technologies,
@@ -62,24 +63,23 @@ export default function EditProjectForm({ project: initialProject }: EditProject
 
     try {
       const formData = new FormData(e.currentTarget);
-      const data: ProjectData = {
+      const data: Omit<ProjectData, '_id'> = {
         title: formData.get('title') as string,
         description: formData.get('description') as string,
         technologies: formData.get('technologies')?.toString().split(',').map(tech => tech.trim()) || [],
         imageUrl: formData.get('imageUrl') as string,
-        githubUrl: formData.get('githubUrl') as string,
-        liveUrl: formData.get('liveUrl') as string,
+        githubUrl: formData.get('githubUrl') as string || undefined,
+        liveUrl: formData.get('liveUrl') as string || undefined,
         featured: formData.get('featured') === 'true',
         order: parseInt(formData.get('order') as string) || 0,
         status: (formData.get('status') as 'draft' | 'published') || 'draft',
         createdAt: optimisticProject.createdAt,
-        updatedAt: optimisticProject.updatedAt,
+        updatedAt: new Date(),
         viewCount: optimisticProject.viewCount,
-        _id: optimisticProject._id
       };
 
       // Update optimistic data immediately
-      updateOptimisticProject(data);
+      updateOptimisticProject({ ...data, _id: optimisticProject._id });
 
       // Start transition for router updates
       startTransition(() => {
