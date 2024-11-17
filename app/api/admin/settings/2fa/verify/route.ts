@@ -7,7 +7,7 @@ import Admin from "@/models/auth";
 export async function POST(request: Request) {
   try {
     // Get admin ID from token
-    const token = cookies().get("admin_token")?.value;
+    const token = (await cookies()).get("admin_token")?.value;
     if (!token) {
       return NextResponse.json(
         { message: "Unauthorized" },
