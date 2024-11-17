@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 // Define public routes that don't require authentication
-const publicRoutes = ['/admin/login'];
+const publicRoutes = ['/admin/login', '/admin/setup'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
