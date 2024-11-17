@@ -23,18 +23,23 @@ export async function POST(request: Request) {
       { expiresIn: '24h' }
     );
 
+    // Create response
+    const response = NextResponse.json({ success: true });
+
     // Set cookie
-    cookies().set({
+    response.cookies.set({
       name: COOKIE_NAME,
       value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
+      path: '/',
       maxAge: 60 * 60 * 24, // 24 hours
     });
 
-    return NextResponse.json({ success: true });
+    return response;
   } catch (error) {
+    console.error('Auth error:', error);
     return NextResponse.json(
       { error: 'Authentication failed' },
       { status: 500 }
