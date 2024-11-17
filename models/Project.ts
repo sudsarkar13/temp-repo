@@ -1,14 +1,21 @@
 import mongoose from 'mongoose';
 
-const ProjectSchema = new mongoose.Schema({
-  num: {
-    type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
+export interface IProject extends mongoose.Document {
+  title: string;
+  description: string;
+  technologies: string[];
+  imageUrl: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  featured: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+  viewCount: number;
+  status: 'draft' | 'published';
+}
+
+const projectSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -17,26 +24,41 @@ const ProjectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  stack: [{
-    name: {
-      type: String,
-      required: true
-    }
+  technologies: [{
+    type: String,
   }],
-  image: {
+  imageUrl: {
     type: String,
     required: true,
   },
-  live: {
-    type: String,
-    required: true,
+  githubUrl: String,
+  liveUrl: String,
+  featured: {
+    type: Boolean,
+    default: false,
   },
-  github: {
+  order: {
+    type: Number,
+    default: 0,
+  },
+  status: {
     type: String,
-    required: true,
-  }
+    enum: ['draft', 'published'],
+    default: 'draft',
+  },
+  viewCount: {
+    type: Number,
+    default: 0,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
-export default mongoose.models.Project || mongoose.model('Project', ProjectSchema); 
+// Add indexes for common queries
+projectSchema.index({ status: 1, featured: 1, order: 1 });
+projectSchema.index({ technologies: 1 });
+projectSchema.index({ viewCount: -1 });
+
+export const Project = mongoose.models.Project || mongoose.model<IProject>('Project', projectSchema);
+
+export default Project;
