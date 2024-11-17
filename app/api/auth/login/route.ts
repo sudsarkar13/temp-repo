@@ -7,8 +7,9 @@ const COOKIE_NAME = 'admin_token';
 export async function POST(request: Request) {
   try {
     const { passkey } = await request.json();
-
+    
     if (passkey !== process.env.ADMIN_PASSKEY) {
+      console.log('Invalid passkey attempt');
       return NextResponse.json(
         { error: 'Invalid passkey' },
         { status: 401 }
@@ -22,13 +23,13 @@ export async function POST(request: Request) {
       { expiresIn: '24h' }
     );
 
-    // Create response
+    // Create response with success message
     const response = NextResponse.json(
-      { success: true, message: 'Login successful' },
+      { success: true },
       { status: 200 }
     );
 
-    // Set cookie with proper options
+    // Set HTTP-only cookie
     response.cookies.set({
       name: COOKIE_NAME,
       value: token,
@@ -36,9 +37,10 @@ export async function POST(request: Request) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 60 * 60 * 24 // 24 hours
     });
 
+    console.log('Login successful, cookie set');
     return response;
   } catch (error) {
     console.error('Auth error:', error);
