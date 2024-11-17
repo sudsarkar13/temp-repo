@@ -1,53 +1,29 @@
 import { NextResponse } from 'next/server';
-import { NextRequest } from 'next/server';
-import { verify } from 'jsonwebtoken';
+import type { NextRequest } from 'next/server';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+export function middleware(request: NextRequest) {
+  const adminToken = request.cookies.get('admin_token');
+  const { pathname } = request.nextUrl;
 
-export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-
-  // Skip middleware for API routes and public assets
-  if (pathname.startsWith('/api') || 
-      pathname.startsWith('/_next') || 
-      pathname.includes('.')) {
-    return NextResponse.next();
-  }
-
-  // Handle login page access
-  if (pathname === '/admin/login') {
-    const token = request.cookies.get('admin_token');
-    if (!token) {
+  // If trying to access admin pages
+  if (pathname.startsWith('/admin')) {
+    // Allow access to login page
+    if (pathname === '/admin/login') {
+      // If already authenticated, redirect to dashboard
+      if (adminToken?.value === process.env.ADMIN_PASSKEY) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+      }
       return NextResponse.next();
     }
 
-    try {
-      verify(token.value, JWT_SECRET);
-      // If token is valid, redirect to admin dashboard
-      return NextResponse.redirect(new URL('/admin', request.url));
-    } catch {
-      // If token is invalid, clear it
-      const response = NextResponse.next();
-      response.cookies.delete('admin_token');
-      return response;
-    }
-  }
-
-  // Protect admin routes
-  if (pathname.startsWith('/admin')) {
-    const token = request.cookies.get('admin_token');
-
-    if (!token) {
+    // For all other admin routes, check authentication
+    if (adminToken?.value !== process.env.ADMIN_PASSKEY) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
 
-    try {
-      verify(token.value, JWT_SECRET);
-      return NextResponse.next();
-    } catch {
-      const response = NextResponse.redirect(new URL('/admin/login', request.url));
-      response.cookies.delete('admin_token');
-      return response;
+    // Redirect /admin to /admin/dashboard
+    if (pathname === '/admin') {
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }
   }
 
@@ -55,7 +31,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ]
+  matcher: '/admin/:path*',
 }; 
