@@ -1,9 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { verifyTwoFactorToken, getDeviceInfo, calculateSessionExpiry } from "@/lib/auth-utils";
 import Admin from "@/models/auth";
 import jwt from "jsonwebtoken";
 
-export async function POST(request: Request) {
+export const runtime = 'nodejs';
+
+export async function POST(request: NextRequest) {
   try {
     const { email, token, rememberMe } = await request.json();
     const admin = await Admin.findOne({ email });
