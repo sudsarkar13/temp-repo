@@ -4,9 +4,7 @@ import bcrypt from "bcryptjs";
 import speakeasy from "speakeasy";
 import Admin from "@/models/auth";
 import { cookies } from "next/headers";
-
-// Store the current token in memory (Note: this will reset on server restart)
-let currentAdminToken: string | null = null;
+import { getCurrentAdminToken, setCurrentAdminToken } from "./tokenStorage";
 
 export async function POST(request: Request) {
   try {
@@ -95,8 +93,8 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24, // 1 day
     });
 
-    // Store the current token
-    currentAdminToken = token;
+    // Update the current token
+    setCurrentAdminToken(token);
 
     return response;
   } catch (error) {
@@ -107,6 +105,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
-// Export the current token for middleware
-export { currentAdminToken };
