@@ -8,7 +8,7 @@ export async function POST() {
     clearCurrentAdminToken();
 
     // Clear the cookie
-    cookies().delete("token");
+    (await cookies()).delete("token");
 
     return NextResponse.json({ message: "Logged out successfully" });
   } catch (error) {
