@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import { connectDB } from '@/lib/db';
+import { connectDB } from '@/lib/mongodb';
 import Project from '@/models/Project';
+import mongoose from 'mongoose';
 
 export async function GET() {
   try {
     await connectDB();
-    const projects = await Project.find({}).sort({ num: 1 });
+    const projects = await Project.find().sort({ num: 1 });
     return NextResponse.json(projects);
   } catch (error) {
     return NextResponse.json(
