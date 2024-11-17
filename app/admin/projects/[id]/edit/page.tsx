@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { Project } from '@/models/Project';
 import { connectDB } from '@/lib/db';
 import EditProjectForm from './EditProjectForm';
+import type { EditPageProps } from './types';
 
 async function getProject(id: string) {
   try {
@@ -16,13 +17,7 @@ async function getProject(id: string) {
   }
 }
 
-interface Props {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-export default async function ProjectEditPage(props: Props) {
-  const params = await props.params;
+export default async function ProjectEditPage({ params }: EditPageProps) {
   const project = await getProject(params.id);
 
   if (!project) {
