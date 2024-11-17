@@ -6,7 +6,7 @@ import Admin from "@/models/auth";
 // Get all devices
 export async function GET(request: Request) {
   try {
-    const token = cookies().get("admin_token")?.value;
+    const token = (await cookies()).get("admin_token")?.value;
     if (!token) {
       return NextResponse.json(
         { message: "Unauthorized" },
