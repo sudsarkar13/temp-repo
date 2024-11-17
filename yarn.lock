@@ -2365,6 +2365,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/speakeasy@npm:^2.0.10":
+  version: 2.0.10
+  resolution: "@types/speakeasy@npm:2.0.10"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/4a9304373a4fe5b7931409384fd948c1ff3ae4cb0b2f5a69f407852f2e3186c4276c969292c634ea722bab859e84cdaf7d006588ce8a3c48ee4199b2deb2dc08
+  languageName: node
+  linkType: hard
+
 "@types/webidl-conversions@npm:*":
   version: 7.0.3
   resolution: "@types/webidl-conversions@npm:7.0.3"
@@ -8008,6 +8017,7 @@ __metadata:
     "@types/qrcode": "npm:^1.5.5"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
+    "@types/speakeasy": "npm:^2.0.10"
     bcryptjs: "npm:^2.4.3"
     chart.js: "npm:^4.4.6"
     class-variance-authority: "npm:^0.7.0"
