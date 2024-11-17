@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/admin", label: "Dashboard" },
@@ -28,9 +28,16 @@ export default function AdminLayout({
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
+  // Don't check auth for login page
+  const isLoginPage = pathname === '/admin/login';
+  
   useEffect(() => {
-    // Check if admin_token exists in cookies
+    if (isLoginPage) {
+      return; // Skip auth check on login page
+    }
+
     const checkAuth = () => {
       const cookies = document.cookie.split(';');
       const hasAdminToken = cookies.some(cookie => 
@@ -44,10 +51,16 @@ export default function AdminLayout({
     };
 
     checkAuth();
-  }, [router]);
+  }, [router, isLoginPage]);
 
+  // Return only children for login page
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
+
+  // Return loading or null while checking auth
   if (!isLoggedIn) {
-    return null; // or return a loading state
+    return null;
   }
 
   return (
