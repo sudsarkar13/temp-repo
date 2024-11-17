@@ -1,31 +1,85 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import speakeasy from "speakeasy";
+import Admin from "@/models/auth";
+import { cookies } from "next/headers";
 
 // Store the current token in memory (Note: this will reset on server restart)
 let currentAdminToken: string | null = null;
 
 export async function POST(request: Request) {
   try {
-    const { passkey } = await request.json();
+    const { email, password } = await request.json();
 
-    if (passkey !== process.env.ADMIN_PASSKEY) {
+    // Find admin by email
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
       return NextResponse.json(
-        { message: "Invalid passkey" },
+        { message: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // Create JWT token
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, admin.password);
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { message: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    // If 2FA is enabled, require verification
+    if (admin.twoFactorEnabled) {
+      // Create a temporary token for 2FA verification
+      const tempToken = jwt.sign(
+        { 
+          id: admin._id,
+          type: "2fa_pending"
+        },
+        process.env.JWT_SECRET || "fallback_secret",
+        { expiresIn: "5m" }
+      );
+
+      const response = NextResponse.json(
+        { 
+          requiresTwoFactor: true,
+          tempToken 
+        },
+        { status: 200 }
+      );
+
+      // Set temporary token in cookie
+      response.cookies.set({
+        name: "temp_token",
+        value: tempToken,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 60 * 5, // 5 minutes
+      });
+
+      return response;
+    }
+
+    // If no 2FA, create full session
     const token = jwt.sign(
-      { admin: true },
+      { 
+        id: admin._id,
+        email: admin.email,
+      },
       process.env.JWT_SECRET || "fallback_secret",
       { expiresIn: "1d" }
     );
 
-    // Store the current token
-    currentAdminToken = token;
+    // Update last login
+    await Admin.findByIdAndUpdate(admin._id, {
+      $set: {
+        lastLoginAt: new Date(),
+      },
+    });
 
-    // Create the response
     const response = NextResponse.json(
       { message: "Login successful" },
       { status: 200 }
@@ -41,8 +95,12 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24, // 1 day
     });
 
+    // Store the current token
+    currentAdminToken = token;
+
     return response;
   } catch (error) {
+    console.error("Login error:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
