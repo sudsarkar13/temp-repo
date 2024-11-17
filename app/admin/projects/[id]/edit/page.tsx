@@ -4,10 +4,6 @@ import { Project } from '@/models/Project';
 import { connectDB } from '@/lib/db';
 import EditProjectForm from './EditProjectForm';
 
-type Props = {
-  params: { id: string }
-}
-
 async function getProject(id: string) {
   try {
     await connectDB();
@@ -20,7 +16,11 @@ async function getProject(id: string) {
   }
 }
 
-export default async function ProjectEditPage({ params }: Props): Promise<JSX.Element> {
+export default async function ProjectEditPage({
+  params,
+}: {
+  params: { id: string };
+}): Promise<JSX.Element> {
   const project = await getProject(params.id);
 
   if (!project) {
