@@ -1,44 +1,54 @@
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
-import { randomBytes, createHash } from 'crypto';
+import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+
+// Store the current token in memory (Note: this will reset on server restart)
+let currentAdminToken: string | null = null;
 
 export async function POST(request: Request) {
   try {
     const { passkey } = await request.json();
-    
-    if (passkey === process.env.ADMIN_PASSKEY) {
-      // Generate a random session token
-      const sessionToken = randomBytes(32).toString('hex');
-      
-      // Hash the token before storing it
-      const hashedToken = createHash('sha256')
-        .update(sessionToken)
-        .digest('hex');
-      
-      // Store hashed token in cookie
-      cookies().set('admin_token', hashedToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        maxAge: 7 * 24 * 60 * 60, // 7 days
-      });
 
-      // Store the hashed token in environment variable for middleware comparison
-      process.env.CURRENT_ADMIN_TOKEN = hashedToken;
-
-      return NextResponse.json({ success: true });
+    if (passkey !== process.env.ADMIN_PASSKEY) {
+      return NextResponse.json(
+        { message: "Invalid passkey" },
+        { status: 401 }
+      );
     }
 
-    return NextResponse.json(
-      { error: 'Invalid passkey' },
-      { status: 401 }
+    // Create JWT token
+    const token = jwt.sign(
+      { admin: true },
+      process.env.JWT_SECRET || "fallback_secret",
+      { expiresIn: "1d" }
     );
+
+    // Store the current token
+    currentAdminToken = token;
+
+    // Create the response
+    const response = NextResponse.json(
+      { message: "Login successful" },
+      { status: 200 }
+    );
+
+    // Set the JWT token as an HTTP-only cookie
+    response.cookies.set({
+      name: "admin_token",
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24, // 1 day
+    });
+
+    return response;
   } catch (error) {
-    console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { message: "Internal server error" },
       { status: 500 }
     );
   }
 }
+
+// Export the current token for middleware
+export { currentAdminToken };
