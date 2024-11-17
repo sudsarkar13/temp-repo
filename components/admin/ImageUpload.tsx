@@ -2,42 +2,34 @@
 
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import Image from 'next/image';
-import { Loader2 } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 
 interface ImageUploadProps {
   value: string;
-  onChange: (url: string) => void;
+  onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
-export function ImageUpload({ value, onChange }: ImageUploadProps) {
+export const ImageUpload: React.FC<ImageUploadProps> = ({
+  value,
+  onChange,
+  disabled
+}) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      toast({
-        title: "Error",
+    if (!file.type.includes('image')) {
+      return toast({
+        title: "Invalid file type",
         description: "Please upload an image file",
-        variant: "destructive",
+        variant: "destructive"
       });
-      return;
-    }
-
-    // Validate file size (5MB limit)
-    if (file.size > 5 * 1024 * 1024) {
-      toast({
-        title: "Error",
-        description: "Image size should be less than 5MB",
-        variant: "destructive",
-      });
-      return;
     }
 
     try {
@@ -47,14 +39,16 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
 
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData,
+        body: formData
       });
 
-      if (!response.ok) throw new Error('Upload failed');
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
 
       const data = await response.json();
       onChange(data.url);
-
+      
       toast({
         title: "Success",
         description: "Image uploaded successfully",
@@ -63,7 +57,7 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
       toast({
         title: "Error",
         description: "Failed to upload image",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setLoading(false);
@@ -71,26 +65,42 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-4">
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={handleUpload}
-          disabled={loading}
-        />
-        {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-      </div>
-      {value && (
-        <div className="relative aspect-video w-full max-w-xl overflow-hidden rounded-lg border">
+    <div className="space-y-4 w-full flex flex-col items-center justify-center">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={onUpload}
+        disabled={disabled || loading}
+        className="hidden"
+        id="imageUpload"
+      />
+      {value ? (
+        <div className="relative w-full h-[200px]">
           <Image
             src={value}
-            alt="Project image"
+            alt="Upload"
             fill
-            className="object-cover"
+            className="object-cover rounded-lg"
           />
+          <Button
+            onClick={() => onChange('')}
+            className="absolute top-2 right-2"
+            variant="destructive"
+            size="icon"
+          >
+            <X className="h-4 w-4" />
+          </Button>
         </div>
+      ) : (
+        <Button
+          disabled={disabled || loading}
+          variant="secondary"
+          onClick={() => document.getElementById('imageUpload')?.click()}
+        >
+          <Upload className="h-4 w-4 mr-2" />
+          {loading ? 'Uploading...' : 'Upload Image'}
+        </Button>
       )}
     </div>
   );
-} 
+}; 
