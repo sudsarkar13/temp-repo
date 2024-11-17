@@ -3,12 +3,10 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import Admin from "@/models/auth";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
-    const token = cookies().get("admin_token")?.value;
+    const token = (await cookies()).get("admin_token")?.value;
     if (!token) {
       return NextResponse.json(
         { message: "Unauthorized" },
