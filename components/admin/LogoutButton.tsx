@@ -11,9 +11,12 @@ export function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth', {
-        method: 'DELETE',
+      const res = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
       });
+      
+      if (!res.ok) throw new Error('Failed to logout');
       
       toast({
         title: "Success",
