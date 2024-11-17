@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,22 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
+
+  // Check if already logged in
+  useEffect(() => {
+    const checkAuth = () => {
+      const cookies = document.cookie.split(';');
+      const hasAdminToken = cookies.some(cookie => 
+        cookie.trim().startsWith('admin_token=')
+      );
+      
+      if (hasAdminToken) {
+        router.push('/admin/dashboard');
+      }
+    };
+
+    checkAuth();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,13 +54,9 @@ export default function LoginPage() {
       // Clear form
       setPasskey('');
       
-      // Use router.push first for smooth transition
+      // Redirect to dashboard
       router.push('/admin/dashboard');
-      
-      // Then force a reload after a short delay to ensure cookie is picked up
-      setTimeout(() => {
-        window.location.href = '/admin/dashboard';
-      }, 100);
+      router.refresh();
 
     } catch (error) {
       console.error('Login error:', error);
@@ -86,4 +98,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-} 
+}
