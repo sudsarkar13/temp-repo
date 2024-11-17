@@ -1,33 +1,115 @@
-import { Sidebar } from "@/components/ui/sidebar";
-import { Toaster } from "@/components/ui/toaster";
+'use client';
+
+import { useState, useEffect } from "react";
 import { LogoutButton } from "@/components/admin/LogoutButton";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
+
+const navItems = [
+  { href: "/admin", label: "Dashboard" },
+  { href: "/admin/projects", label: "Projects" },
+  { href: "/admin/messages", label: "Messages" },
+];
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if admin_token exists in cookies
+    const checkAuth = () => {
+      const cookies = document.cookie.split(';');
+      const hasAdminToken = cookies.some(cookie => 
+        cookie.trim().startsWith('admin_token=')
+      );
+      setIsLoggedIn(hasAdminToken);
+      
+      if (!hasAdminToken) {
+        router.push('/admin/login');
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  if (!isLoggedIn) {
+    return null; // or return a loading state
+  }
+
   return (
-    <div className="flex min-h-screen">
-      <Sidebar className="hidden lg:block w-64 border-r">
-        <div className="space-y-4 py-4">
-          <div className="px-3 py-2">
-            <h2 className="mb-2 px-4 text-lg font-semibold">Admin Dashboard</h2>
-            <div className="space-y-1">
-              <Sidebar.Link href="/admin">Dashboard</Sidebar.Link>
-              <Sidebar.Link href="/admin/projects">Projects</Sidebar.Link>
-              <Sidebar.Link href="/admin/messages">Messages</Sidebar.Link>
+    <div className="min-h-screen">
+      {/* Mobile Navigation */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 p-4 border-b bg-background z-50">
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-64 bg-primary">
+            <SheetHeader>
+              <SheetTitle className="text-white">Admin Dashboard</SheetTitle>
+            </SheetHeader>
+            <div className="flex flex-col gap-4 mt-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-2 text-sm text-white hover:bg-primary/80 rounded-md"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <div className="mt-auto pt-4">
+                <LogoutButton />
+              </div>
             </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Desktop Navigation */}
+      <div className="hidden lg:block fixed top-0 left-0 bottom-0 w-64 border-r bg-background">
+        <div className="flex flex-col h-full p-4">
+          <h2 className="text-lg font-semibold px-4 mb-8">Admin Dashboard</h2>
+          <div className="space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex items-center px-4 py-2 text-sm hover:bg-accent rounded-md"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <div className="mt-auto pt-4">
+            <LogoutButton />
           </div>
         </div>
-        <div className="absolute bottom-4 left-4">
-          <LogoutButton />
-        </div>
-      </Sidebar>
-      <main className="flex-1 p-8">
-        {children}
-      </main>
-      <Toaster />
+      </div>
+
+      {/* Main Content */}
+      <div className="lg:pl-64 pt-16 lg:pt-0">
+        <main className="p-4 lg:p-8">
+          {children}
+        </main>
+      </div>
     </div>
   );
 } 
