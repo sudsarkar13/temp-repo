@@ -6,17 +6,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { IProject } from '@/models/Project';
+
+interface ProjectFormData {
+  title: string;
+  description: string;
+  technologies: string[];
+  imageUrl: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  featured: boolean;
+  order: number;
+  status: 'draft' | 'published';
+}
 
 export default function EditProject({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<IProject | null>(null);
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
         const response = await fetch(`/api/projects/${params.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch project');
+        }
         const data = await response.json();
         setProject(data);
       } catch (error) {
@@ -25,11 +41,12 @@ export default function EditProject({ params }: { params: { id: string } }) {
           description: "Failed to fetch project",
           variant: "destructive",
         });
+        router.push('/admin/projects');
       }
     };
 
     fetchProject();
-  }, [params.id, toast]);
+  }, [params.id, toast, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,15 +54,16 @@ export default function EditProject({ params }: { params: { id: string } }) {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const data = {
-        num: formData.get('num'),
-        title: formData.get('title'),
-        category: formData.get('category'),
-        description: formData.get('description'),
-        stack: formData.get('stack')?.toString().split(',').map(name => ({ name: name.trim() })),
-        image: formData.get('image'),
-        live: formData.get('live'),
-        github: formData.get('github'),
+      const data: ProjectFormData = {
+        title: formData.get('title') as string,
+        description: formData.get('description') as string,
+        technologies: formData.get('technologies')?.toString().split(',').map(tech => tech.trim()) || [],
+        imageUrl: formData.get('imageUrl') as string,
+        githubUrl: formData.get('githubUrl') as string,
+        liveUrl: formData.get('liveUrl') as string,
+        featured: formData.get('featured') === 'true',
+        order: parseInt(formData.get('order') as string) || 0,
+        status: (formData.get('status') as 'draft' | 'published') || 'draft',
       };
 
       const response = await fetch(`/api/projects/${params.id}`, {
@@ -56,13 +74,15 @@ export default function EditProject({ params }: { params: { id: string } }) {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) throw new Error('Failed to update project');
+      if (!response.ok) {
+        throw new Error('Failed to update project');
+      }
 
       toast({
         title: "Success",
         description: "Project updated successfully",
       });
-      
+
       router.push('/admin/projects');
     } catch (error) {
       toast({
@@ -75,63 +95,134 @@ export default function EditProject({ params }: { params: { id: string } }) {
     }
   };
 
-  if (!project) return <div>Loading...</div>;
+  if (!project) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-accent"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Edit Project</h1>
+    <div className="container mx-auto py-8">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-6">Edit Project</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="title" className="block text-sm font-medium mb-2">Title</label>
+            <Input
+              id="title"
+              name="title"
+              defaultValue={project.title}
+              required
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium mb-2">Description</label>
+            <Textarea
+              id="description"
+              name="description"
+              defaultValue={project.description}
+              required
+              className="w-full min-h-[100px]"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="technologies" className="block text-sm font-medium mb-2">Technologies (comma-separated)</label>
+            <Input
+              id="technologies"
+              name="technologies"
+              defaultValue={project.technologies.join(', ')}
+              required
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="imageUrl" className="block text-sm font-medium mb-2">Image URL</label>
+            <Input
+              id="imageUrl"
+              name="imageUrl"
+              defaultValue={project.imageUrl}
+              required
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="githubUrl" className="block text-sm font-medium mb-2">GitHub URL</label>
+            <Input
+              id="githubUrl"
+              name="githubUrl"
+              defaultValue={project.githubUrl}
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="liveUrl" className="block text-sm font-medium mb-2">Live URL</label>
+            <Input
+              id="liveUrl"
+              name="liveUrl"
+              defaultValue={project.liveUrl}
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="order" className="block text-sm font-medium mb-2">Display Order</label>
+            <Input
+              id="order"
+              name="order"
+              type="number"
+              defaultValue={project.order}
+              required
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="status" className="block text-sm font-medium mb-2">Status</label>
+            <select
+              id="status"
+              name="status"
+              defaultValue={project.status}
+              className="w-full rounded-md border border-input bg-background px-3 py-2"
+            >
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="featured"
+              name="featured"
+              defaultChecked={project.featured}
+              className="rounded border-input"
+            />
+            <label htmlFor="featured" className="text-sm font-medium">Featured Project</label>
+          </div>
+
+          <div className="flex justify-end gap-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.push('/admin/projects')}
+              disabled={loading}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
+        </form>
       </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
-        <div className="space-y-2">
-          <label>Number</label>
-          <Input name="num" defaultValue={project.num} required />
-        </div>
-        
-        <div className="space-y-2">
-          <label>Title</label>
-          <Input name="title" defaultValue={project.title} required />
-        </div>
-
-        <div className="space-y-2">
-          <label>Category</label>
-          <Input name="category" defaultValue={project.category} required />
-        </div>
-
-        <div className="space-y-2">
-          <label>Description</label>
-          <Textarea name="description" defaultValue={project.description} required />
-        </div>
-
-        <div className="space-y-2">
-          <label>Stack (comma-separated)</label>
-          <Input 
-            name="stack" 
-            defaultValue={project.stack.map((s: any) => s.name).join(', ')} 
-            required 
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label>Image URL</label>
-          <Input name="image" defaultValue={project.image} required />
-        </div>
-
-        <div className="space-y-2">
-          <label>Live URL</label>
-          <Input name="live" defaultValue={project.live} />
-        </div>
-
-        <div className="space-y-2">
-          <label>Github URL</label>
-          <Input name="github" defaultValue={project.github} />
-        </div>
-
-        <Button type="submit" disabled={loading}>
-          {loading ? 'Updating...' : 'Update Project'}
-        </Button>
-      </form>
     </div>
   );
-} 
+}
