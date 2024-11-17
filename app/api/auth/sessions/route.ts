@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Admin from "@/models/auth";
 import { isSessionExpired } from "@/lib/auth-utils";
 import { getToken } from "next-auth/jwt";
@@ -6,7 +6,7 @@ import { AdminSession } from "@/types/auth";
 
 export const runtime = 'nodejs';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const token = await getToken({ req: request as any });
     
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
   }
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   try {
     const token = await getToken({ req: request as any });
     
