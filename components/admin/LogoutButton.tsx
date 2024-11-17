@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { LogOut } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
@@ -11,11 +11,15 @@ export function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch('/api/auth', {
+        method: 'DELETE',
+      });
+      
       toast({
         title: "Success",
         description: "Logged out successfully",
       });
+
       router.push('/admin/login');
       router.refresh();
     } catch (error) {
@@ -30,6 +34,7 @@ export function LogoutButton() {
   return (
     <Button 
       variant="ghost" 
+      size="sm"
       onClick={handleLogout}
       className="w-full justify-start"
     >
