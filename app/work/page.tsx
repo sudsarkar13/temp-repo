@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -14,60 +14,49 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import WorkSliderBtns from "@/components/buttons/WorkSliderBtns";
+import Loading from "@/components/loading/loading";
 
-const projects = [
-	{
-		num: "01",
-		category: "Ubuntu",
-		title: "Lenovo Dark Grub 4K",
-		description:
-			"A shellscript tool to seamlessly setup a fully optimized Ubuntu Desktop for web development.",
-		stack: [{ name: "Ubuntu" }, { name: "GRUB" }, { name: "Open Source" }],
-		image: "/assets/projects/p1.png",
-		live: "https://www.gnome-look.org/p/1941975",
-		github: "https://github.com/sudsarkar13/Lenovo-dark-grub-4k-ubuntu",
-	},
-	{
-		num: "02",
-		category: "Ubuntu",
-		title: "Ultimate Ubuntu Setup for Web Developers",
-		description:
-			"A shellscript tool to seamlessly setup a fully optimized Ubuntu Desktop for web development.",
-		stack: [
-			{ name: "Ubuntu" },
-			{ name: "Shellscript" },
-			{ name: "Setup Tool" },
-			{ name: "Open Source" },
-		],
-		image: "/assets/projects/p2.png",
-		live: "",
-		github:
-			"https://github.com/sudsarkar13/Ultimate-Ubuntu-Setup-for-Web-Developers",
-	},
-	{
-		num: "03",
-		category: "Frontend",
-		title: "Dr. Reach - Healthunity Solutions Pvt. Ltd.",
-		description: "A website for consulting and booking appointments.",
-		stack: [{ name: "Next.Js" }, { name: "Tailwind CSS" }, { name: "Shadcn" }],
-		image: "/assets/projects/p3.png",
-		live: "https://dreach.in",
-		github: "",
-	},
-	{
-		num: "04",
-		category: "Full Stack",
-		title: "Portfolio Website",
-		description:
-			"A personal portfolio website built with Next.js, Shadcn, and Tailwind CSS.",
-		stack: [{ name: "Next.js" }, { name: "Shadcn" }, { name: "Tailwind CSS" }],
-		image: "/assets/projects/p4.png",
-		live: "https://sudeeptasarkar.in",
-		github: "https://github.com/sudsarkar13/personal-portfolio",
-	},
-];
+// Types for our project data
+interface ProjectStack {
+	name: string;
+}
+
+interface Project {
+	_id: string;
+	num: string;
+	category: string;
+	title: string;
+	description: string;
+	stack: ProjectStack[];
+	image: string;
+	live: string;
+	github: string;
+}
 
 const WorkPage: React.FC = () => {
+	const [projects, setProjects] = useState<Project[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		const fetchProjects = async () => {
+			try {
+				const response = await fetch('/api/projects');
+				if (!response.ok) {
+					throw new Error('Failed to fetch projects');
+				}
+				const data = await response.json();
+				setProjects(data);
+			} catch (err) {
+				setError(err instanceof Error ? err.message : 'Failed to load projects');
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchProjects();
+	}, []);
+
 	const [project, setProject] = useState(projects[0]);
 	const handleSlideChange = (swiper: any) => {
 		// get current slide index
@@ -75,6 +64,22 @@ const WorkPage: React.FC = () => {
 		// update project state based on current slide index
 		setProject(projects[currentIndex]);
 	};
+
+	if (error) {
+		return (
+			<div className="flex items-center justify-center min-h-[400px]">
+				<div className="text-center">
+					<h3 className="text-xl font-semibold mb-2">Failed to load projects</h3>
+					<p className="text-gray-600">{error}</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (loading) {
+		return <Loading />;
+	}
+
 	return (
 		<motion.section
 			initial={{ opacity: 0 }}
