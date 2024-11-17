@@ -1,27 +1,20 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { clearCurrentAdminToken } from "../login/tokenStorage";
 
 export async function POST() {
   try {
-    // Clear the stored token
-    (globalThis as any).currentAdminToken = null;
+    // Clear the token from memory
+    clearCurrentAdminToken();
 
-    // Create response
-    const response = NextResponse.json({ success: true });
-    
-    // Clear the admin token cookie
-    response.cookies.set('admin_token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 0, // Expire immediately
-    });
+    // Clear the cookie
+    cookies().delete("token");
 
-    return response;
+    return NextResponse.json({ message: "Logged out successfully" });
   } catch (error) {
-    console.error('Logout error:', error);
+    console.error("Logout error:", error);
     return NextResponse.json(
-      { error: 'Failed to logout' },
+      { message: "Error during logout" },
       { status: 500 }
     );
   }
