@@ -18,7 +18,7 @@ async function getProject(id: string) {
 
 interface Props {
   params: Promise<{ id: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function ProjectEditPage(props: Props) {
