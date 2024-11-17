@@ -4,6 +4,13 @@ import { Project } from '@/models/Project';
 import { connectDB } from '@/lib/db';
 import EditProjectForm from './EditProjectForm';
 
+interface PageProps {
+  params: {
+    id: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
 async function getProject(id: string) {
   try {
     await connectDB();
@@ -16,7 +23,7 @@ async function getProject(id: string) {
   }
 }
 
-export default async function ProjectEditPage({ params }: { params: { id: string } }) {
+export default async function ProjectEditPage({ params }: PageProps) {
   const project = await getProject(params.id);
 
   if (!project) {
