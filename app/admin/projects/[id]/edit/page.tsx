@@ -17,8 +17,12 @@ async function getProject(id: string) {
   }
 }
 
-export default async function ProjectEditPage(props: EditPageProps) {
-  const { id } = await props.params;
+export default async function ProjectEditPage({
+  params,
+  searchParams,
+}: EditPageProps) {
+  const { id } = await params;
+  const searchParamsData = searchParams ? await searchParams : {};
   const project = await getProject(id);
 
   if (!project) {
