@@ -1,9 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { Project } from '@/models/Project';
 import { Message } from '@/models/Message';
 import Analytics from '@/models/analytics';
 
-export async function GET(request: Request) {
+export const runtime = 'nodejs';
+
+export async function GET(request: NextRequest) {
   try {
     // Check auth token from cookie
     const token = request.cookies.get('admin_token');
