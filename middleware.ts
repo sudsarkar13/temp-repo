@@ -3,13 +3,18 @@ import { NextRequest } from 'next/server';
 import { verify } from 'jsonwebtoken';
 
 export async function middleware(request: NextRequest) {
+  // Skip middleware for API routes
+  if (request.nextUrl.pathname.startsWith('/api')) {
+    return NextResponse.next();
+  }
+
   if (request.nextUrl.pathname === '/admin/login') {
     const token = request.cookies.get('admin_token');
     if (token) {
       try {
         verify(token.value, process.env.JWT_SECRET!);
         return NextResponse.redirect(new URL('/admin', request.url));
-      } catch (error) {
+      } catch {
         const response = NextResponse.next();
         response.cookies.delete('admin_token');
         return response;
@@ -28,7 +33,7 @@ export async function middleware(request: NextRequest) {
     try {
       verify(token.value, process.env.JWT_SECRET!);
       return NextResponse.next();
-    } catch (error) {
+    } catch {
       const response = NextResponse.redirect(new URL('/admin/login', request.url));
       response.cookies.delete('admin_token');
       return response;
@@ -39,5 +44,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/admin/:path*'
+  matcher: [
+    '/admin/:path*',
+    '/api/auth/:path*'
+  ]
 } 
