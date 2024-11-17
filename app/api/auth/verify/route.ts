@@ -1,8 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
-export async function GET() {
+export const runtime = 'nodejs';
+
+export async function POST(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("admin_token");
@@ -27,4 +29,4 @@ export async function GET() {
       { status: 401 }
     );
   }
-} 
+}
