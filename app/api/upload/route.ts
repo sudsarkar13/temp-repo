@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
 		// Upload to Cloudinary in the Portfolio folder
 		const result = await cloudinary.uploader.upload(dataURI, {
-			folder: "Portfolio/Projects",
+			folder: "Portfolio",
 			resource_type: "auto",
 			allowed_formats: ["jpg", "png", "gif", "webp", "svg"],
 			transformation: [{ quality: "auto:best" }, { fetch_format: "auto" }],
