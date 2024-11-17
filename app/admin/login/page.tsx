@@ -17,6 +17,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      console.log('Attempting login...');
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -25,25 +26,34 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
+      console.log('Login response:', data);
 
       if (!res.ok) {
         throw new Error(data.error || 'Authentication failed');
       }
 
       toast({
-        title: "Success",
-        description: "Logged in successfully",
+        title: "Success!",
+        description: "Login successful. Redirecting...",
       });
 
-      // Force a hard navigation to /admin
-      window.location.href = '/admin';
+      // Clear form
+      setPasskey('');
+      
+      // Use setTimeout to ensure toast is visible
+      setTimeout(() => {
+        console.log('Redirecting to admin dashboard...');
+        window.location.href = '/admin';
+      }, 1500);
+
     } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Invalid passkey",
         variant: "destructive",
       });
-      setPasskey(''); // Clear the input on error
+      setPasskey('');
     } finally {
       setLoading(false);
     }
@@ -63,6 +73,7 @@ export default function LoginPage() {
             value={passkey}
             onChange={(e) => setPasskey(e.target.value)}
             required
+            autoComplete="off"
           />
           <Button
             type="submit"
