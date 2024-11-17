@@ -27,8 +27,14 @@ const ProjectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  live: String,
-  github: String,
+  live: {
+    type: String,
+    required: true,
+  },
+  github: {
+    type: String,
+    required: true,
+  }
 }, {
   timestamps: true
 });
