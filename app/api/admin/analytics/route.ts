@@ -4,6 +4,8 @@ import Analytics from '@/models/analytics';
 import { Project } from '@/models/Project';
 import { Message } from '@/models/Message';
 
+export const runtime = 'nodejs';
+
 export async function GET(request: NextRequest) {
   try {
     // Check auth token from cookie
