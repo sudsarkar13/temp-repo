@@ -17,7 +17,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ passkey }),
@@ -35,16 +35,15 @@ export default function LoginPage() {
         description: "Logged in successfully",
       });
 
-      setTimeout(() => {
-        router.push('/admin');
-        router.refresh();
-      }, 100);
+      // Force a hard navigation to /admin
+      window.location.href = '/admin';
     } catch (error) {
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Invalid passkey",
         variant: "destructive",
       });
+      setPasskey(''); // Clear the input on error
     } finally {
       setLoading(false);
     }
