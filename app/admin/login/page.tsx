@@ -9,7 +9,6 @@ import { useToast } from "@/hooks/use-toast";
 export default function LoginPage() {
   const [passkey, setPasskey] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,8 +37,8 @@ export default function LoginPage() {
       // Clear form
       setPasskey('');
       
-      // Force a hard reload and redirect
-      window.location.replace('/admin');
+      // Force a hard reload to ensure middleware picks up the new cookie
+      window.location.href = '/admin';
 
     } catch (error) {
       console.error('Login error:', error);
