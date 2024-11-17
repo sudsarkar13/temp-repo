@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import speakeasy from "speakeasy";
@@ -6,7 +6,9 @@ import Admin from "@/models/auth";
 import { cookies } from "next/headers";
 import { getCurrentAdminToken, setCurrentAdminToken } from "./tokenStorage";
 
-export async function POST(request: Request) {
+export const runtime = 'nodejs';
+
+export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
 
