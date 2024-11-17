@@ -18,8 +18,8 @@ async function getProject(id: string) {
 }
 
 export default async function ProjectEditPage(props: EditPageProps) {
-  const params = await props.params;
-  const project = await getProject(params.id);
+  const { id } = await props.params;
+  const project = await getProject(id);
 
   if (!project) {
     notFound();
