@@ -1,10 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import speakeasy from "speakeasy";
 import Admin from "@/models/auth";
 
-export async function POST(request: Request) {
+export const runtime = 'nodejs';
+
+export async function POST(request: NextRequest) {
   try {
     // Get admin ID from token
     const token = (await cookies()).get("admin_token")?.value;
