@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { IProject } from '@/models/Project';
 
-interface ProjectFormData {
+type ProjectData = {
   title: string;
   description: string;
   technologies: string[];
@@ -18,7 +18,11 @@ interface ProjectFormData {
   featured: boolean;
   order: number;
   status: 'draft' | 'published';
-}
+  createdAt: Date;
+  updatedAt: Date;
+  viewCount: number;
+  _id: string;
+};
 
 interface EditProjectFormProps {
   project: IProject;
@@ -29,9 +33,27 @@ export default function EditProjectForm({ project: initialProject }: EditProject
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
+
+  // Convert mongoose document to plain object
+  const initialData: ProjectData = {
+    _id: initialProject._id,
+    title: initialProject.title,
+    description: initialProject.description,
+    technologies: initialProject.technologies,
+    imageUrl: initialProject.imageUrl,
+    githubUrl: initialProject.githubUrl,
+    liveUrl: initialProject.liveUrl,
+    featured: initialProject.featured,
+    order: initialProject.order,
+    status: initialProject.status,
+    createdAt: initialProject.createdAt,
+    updatedAt: initialProject.updatedAt,
+    viewCount: initialProject.viewCount
+  };
+
   const [optimisticProject, updateOptimisticProject] = useOptimistic(
-    initialProject,
-    (state, newData: Partial<IProject>) => ({ ...state, ...newData })
+    initialData,
+    (state: ProjectData, newData: Partial<ProjectData>) => ({ ...state, ...newData })
   );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +62,7 @@ export default function EditProjectForm({ project: initialProject }: EditProject
 
     try {
       const formData = new FormData(e.currentTarget);
-      const data: ProjectFormData = {
+      const data: ProjectData = {
         title: formData.get('title') as string,
         description: formData.get('description') as string,
         technologies: formData.get('technologies')?.toString().split(',').map(tech => tech.trim()) || [],
@@ -50,6 +72,10 @@ export default function EditProjectForm({ project: initialProject }: EditProject
         featured: formData.get('featured') === 'true',
         order: parseInt(formData.get('order') as string) || 0,
         status: (formData.get('status') as 'draft' | 'published') || 'draft',
+        createdAt: optimisticProject.createdAt,
+        updatedAt: optimisticProject.updatedAt,
+        viewCount: optimisticProject.viewCount,
+        _id: optimisticProject._id
       };
 
       // Update optimistic data immediately
@@ -90,7 +116,7 @@ export default function EditProjectForm({ project: initialProject }: EditProject
       });
     } catch (error) {
       // Revert optimistic update on error
-      updateOptimisticProject(initialProject);
+      updateOptimisticProject(initialData);
 
       toast({
         title: "Error",
@@ -102,7 +128,7 @@ export default function EditProjectForm({ project: initialProject }: EditProject
     }
   };
 
-  const handleFieldChange = (field: keyof IProject, value: any) => {
+  const handleFieldChange = (field: keyof ProjectData, value: any) => {
     // Update optimistic data on field change
     updateOptimisticProject({ [field]: value });
   };
