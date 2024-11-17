@@ -1,15 +1,14 @@
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
 import { format, subDays } from 'date-fns';
-import { Analytics } from '@/lib/analytics';
-import Project from '@/models/project';
-import Message from '@/models/message';
+import Analytics from '@/models/analytics';
+import { Project } from '@/models/Project';
+import { Message } from '@/models/Message';
 
 export async function GET(request: Request) {
   try {
-    const token = await getToken({ req: request as any });
-    
-    if (!token?.sub) {
+    // Check auth token from cookie
+    const token = request.cookies.get('admin_token');
+    if (!token) {
       return NextResponse.json(
         { message: 'Unauthorized' },
         { status: 401 }
@@ -50,19 +49,26 @@ export async function GET(request: Request) {
           views: { $sum: 1 },
         },
       },
+      {
+        $lookup: {
+          from: 'projects',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'project',
+        },
+      },
+      {
+        $unwind: '$project',
+      },
+      {
+        $project: {
+          title: '$project.title',
+          views: 1,
+        },
+      },
     ]);
 
-    // Get project details for the views
-    const projects = await Project.find({
-      _id: { $in: projectViews.map(pv => pv._id) },
-    }, 'title');
-
-    const projectViewsData = projectViews.map(pv => ({
-      name: projects.find(p => p._id.toString() === pv._id.toString())?.title || 'Unknown',
-      views: pv.views,
-    }));
-
-    // Get message categories distribution
+    // Get message categories
     const messageCategories = await Message.aggregate([
       {
         $match: {
@@ -71,47 +77,31 @@ export async function GET(request: Request) {
       },
       {
         $group: {
-          _id: '$category',
+          _id: '$status',
           count: { $sum: 1 },
         },
       },
     ]);
 
-    // Calculate engagement metrics
-    const [totalViews, totalClicks] = await Promise.all([
-      Analytics.countDocuments({
-        type: 'pageView',
-        timestamp: { $gte: startDate, $lte: endDate },
-      }),
-      Analytics.countDocuments({
-        type: 'projectClick',
-        timestamp: { $gte: startDate, $lte: endDate },
-      }),
-    ]);
-
-    // Calculate average time on site (assuming you're tracking this)
-    const avgTimeOnSite = 5; // Placeholder - implement actual calculation
-
-    const chartData = {
-      pageViews: pageViews.map(pv => ({
-        date: pv._id,
-        count: pv.count,
+    // Format data for response
+    const formattedData = {
+      pageViews: pageViews.map(view => ({
+        date: view._id,
+        views: view.count,
       })),
-      projectViews: projectViewsData,
-      messageCategories: messageCategories.map(mc => ({
-        category: mc._id,
-        count: mc.count,
+      projectViews: projectViews.map(project => ({
+        title: project.title,
+        views: project.views,
       })),
-      engagementMetrics: {
-        clickThroughRate: totalViews > 0 ? (totalClicks / totalViews) * 100 : 0,
-        averageTimeOnSite: avgTimeOnSite,
-        bounceRate: 45, // Placeholder - implement actual calculation
-      },
+      messageCategories: messageCategories.map(category => ({
+        status: category._id,
+        count: category.count,
+      })),
     };
 
-    return NextResponse.json({ chartData });
+    return NextResponse.json(formattedData);
   } catch (error) {
-    console.error('Error fetching analytics data:', error);
+    console.error('Analytics error:', error);
     return NextResponse.json(
       { message: 'Internal server error' },
       { status: 500 }
