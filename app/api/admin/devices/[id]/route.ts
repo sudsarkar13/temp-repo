@@ -1,9 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import Admin from "@/models/auth";
 
-export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+export const runtime = 'nodejs';
+
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   try {
     const token = (await cookies()).get("admin_token")?.value;
