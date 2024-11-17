@@ -7,10 +7,8 @@ const COOKIE_NAME = 'admin_token';
 export async function POST(request: Request) {
   try {
     const { passkey } = await request.json();
-    console.log('Received login request');
 
     if (passkey !== process.env.ADMIN_PASSKEY) {
-      console.log('Invalid passkey');
       return NextResponse.json(
         { error: 'Invalid passkey' },
         { status: 401 }
@@ -41,7 +39,6 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24, // 24 hours
     });
 
-    console.log('Login successful, cookie set');
     return response;
   } catch (error) {
     console.error('Auth error:', error);
