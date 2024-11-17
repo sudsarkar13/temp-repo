@@ -1,11 +1,14 @@
-import React from 'react';
+'use client';
 
-const page: React.FC = () => {
-  return (
-    <main>
-      <div>page</div>
-    </main>
-  );
-};
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default page;
+export default function AdminPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/admin/dashboard');
+  }, [router]);
+
+  return null; // or a loading spinner if you prefer
+}
