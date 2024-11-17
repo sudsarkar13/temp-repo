@@ -16,11 +16,11 @@ async function getProject(id: string) {
   }
 }
 
-export default async function ProjectEditPage({
-  params,
-}: {
+type Props = {
   params: { id: string };
-}): Promise<JSX.Element> {
+}
+
+const ProjectEditPage = async ({ params }: Props) => {
   const project = await getProject(params.id);
 
   if (!project) {
@@ -31,14 +31,12 @@ export default async function ProjectEditPage({
     <div className="container mx-auto py-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Edit Project</h1>
-        <Suspense fallback={
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-accent"></div>
-          </div>
-        }>
+        <Suspense fallback={<div>Loading...</div>}>
           <EditProjectForm project={project} />
         </Suspense>
       </div>
     </div>
   );
-}
+};
+
+export default ProjectEditPage;
