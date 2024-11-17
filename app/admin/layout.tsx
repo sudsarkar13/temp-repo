@@ -38,14 +38,21 @@ export default function AdminLayout({
       return; // Skip auth check on login page
     }
 
-    const checkAuth = () => {
-      const cookies = document.cookie.split(';');
-      const hasAdminToken = cookies.some(cookie => 
-        cookie.trim().startsWith('admin_token=')
-      );
-      setIsLoggedIn(hasAdminToken);
-      
-      if (!hasAdminToken) {
+    const checkAuth = async () => {
+      try {
+        // Try to fetch a protected endpoint to verify auth
+        const response = await fetch('/api/auth/verify', {
+          credentials: 'include' // Important for cookies
+        });
+        
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+          router.push('/admin/login');
+        }
+      } catch (error) {
+        setIsLoggedIn(false);
         router.push('/admin/login');
       }
     };
