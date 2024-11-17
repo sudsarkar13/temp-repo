@@ -13,6 +13,11 @@ const buttonVariants = cva(
 				primary: "bg-primary text-white",
         outline: "border border-accent bg-transparent text-accent hover:bg-accent hover:text-primary",
 				ghost: "bg-transparent text-accent hover:bg-accent hover:text-white",
+				danger: "bg-red-500 text-white hover:bg-red-600",
+				success: "bg-green-500 text-white hover:bg-green-600",
+				warning: "bg-yellow-500 text-white hover:bg-yellow-600",
+				destructive: "bg-red-500 text-white hover:bg-red-600",
+				secondary: "bg-secondary text-primary hover:bg-secondary-hover",
 			},
 			size: {
 				default: "h-[44px] px-6",
