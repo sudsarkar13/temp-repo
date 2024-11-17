@@ -4,7 +4,7 @@ import { getCurrentAdminToken } from "./login/tokenStorage";
 
 export async function GET() {
   try {
-    const token = cookies().get("token");
+    const token = (await cookies()).get("token");
     const currentToken = getCurrentAdminToken();
 
     return NextResponse.json({
