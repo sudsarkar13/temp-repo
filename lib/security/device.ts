@@ -19,9 +19,9 @@ export async function generateDeviceId(userAgent: string, ipAddress: string): Pr
 
   // Create a unique fingerprint from device characteristics
   const fingerprint = JSON.stringify({
-    browser: browser.name + browser.version,
-    os: os.name + os.version,
-    device: device.vendor + device.model,
+    browser: `${browser.name || 'Unknown'}${browser.version ? ' ' + browser.version : ''}`,
+    os: `${os.name || 'Unknown'}${os.version ? ' ' + os.version : ''}`,
+    device: `${device.vendor || ''}${device.model ? ' ' + device.model : 'Unknown Device'}`,
     ip: ipAddress,
   });
 
