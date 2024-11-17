@@ -1,6 +1,6 @@
 export interface EditPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
   searchParams?: { [key: string]: string | string[] | undefined };
 }
