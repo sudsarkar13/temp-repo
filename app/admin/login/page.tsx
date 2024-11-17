@@ -20,22 +20,29 @@ export default function LoginPage() {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passkey })
+        body: JSON.stringify({ passkey }),
+        credentials: 'include'
       });
 
-      if (!res.ok) throw new Error('Authentication failed');
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Authentication failed');
+      }
 
       toast({
         title: "Success",
         description: "Logged in successfully",
       });
 
-      router.push('/admin');
-      router.refresh();
+      setTimeout(() => {
+        router.push('/admin');
+        router.refresh();
+      }, 100);
     } catch (error) {
       toast({
         title: "Error",
-        description: "Invalid passkey",
+        description: error instanceof Error ? error.message : "Invalid passkey",
         variant: "destructive",
       });
     } finally {
