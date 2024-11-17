@@ -2,30 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import { ArrowUpRight, Github } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import WorkSliderBtns from "@/components/buttons/WorkSliderBtns";
+import ProjectSlider from "@/components/work/ProjectSlider";
 import Loading from "@/components/loading/loading";
-
-// Types for our project data
-interface ProjectStack {
-  name: string;
-}
-
-interface Project {
-  _id: string;
-  num: string;
-  category: string;
-  title: string;
-  description: string;
-  stack: ProjectStack[];
-  image: string;
-  live: string;
-  github: string;
-}
+import { Project } from "@/types/project";
 
 const WorkPage: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -55,10 +36,9 @@ const WorkPage: React.FC = () => {
     fetchProjects();
   }, []);
 
-  const handleSlideChange = (swiper: any) => {
-    const currentIndex = swiper.activeIndex;
-    if (projects[currentIndex]) {
-      setCurrentProject(projects[currentIndex]);
+  const handleSlideChange = (index: number) => {
+    if (projects[index]) {
+      setCurrentProject(projects[index]);
     }
   };
 
@@ -157,35 +137,7 @@ const WorkPage: React.FC = () => {
           </div>
           {/* image */}
           <div className={`w-full xl:w-[50%] order-1 xl:order-none`}>
-            <div className={`relative h-[300px] xl:h-[460px]`}>
-              <Swiper
-                onSlideChange={handleSlideChange}
-                className={`h-full relative`}
-                spaceBetween={30}
-                slidesPerView={1}>
-                {projects.map((project) => (
-                  <SwiperSlide key={project._id}>
-                    <div className={`relative h-full w-full rounded-[10px] overflow-hidden`}>
-                      <Image
-                        src={project.image}
-                        fill
-                        priority
-                        quality={100}
-                        alt={project.title}
-                        className={`object-cover object-top`}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-                <div className="slider-buttons">
-                  <WorkSliderBtns
-                    containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-                    btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[35px] h-[35px] flex justify-center items-center rounded-full shadow-lg transition-all duration-500"
-                    iconStyles="text-3xl"
-                  />
-                </div>
-              </Swiper>
-            </div>
+            <ProjectSlider projects={projects} onSlideChange={handleSlideChange} />
           </div>
         </div>
       </div>
