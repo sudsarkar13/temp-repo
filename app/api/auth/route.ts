@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       { expiresIn: '24h' }
     );
 
-    const response = NextResponse.json({ token });
+    const response = NextResponse.json({ success: true });
     response.cookies.set('admin_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -33,4 +33,10 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+}
+
+export async function DELETE() {
+  const response = NextResponse.json({ success: true });
+  response.cookies.delete('admin_token');
+  return response;
 } 
