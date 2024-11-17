@@ -1,33 +1,47 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import jwt from 'jsonwebtoken';
 
 export function middleware(request: NextRequest) {
   const adminToken = request.cookies.get('admin_token');
   const { pathname } = request.nextUrl;
 
-  // If trying to access admin pages
-  if (pathname.startsWith('/admin')) {
-    // Allow access to login page
-    if (pathname === '/admin/login') {
-      // If already authenticated, redirect to dashboard
-      if (adminToken?.value === process.env.CURRENT_ADMIN_TOKEN) {
-        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-      }
-      return NextResponse.next();
-    }
+  // Skip middleware for non-admin routes
+  if (!pathname.startsWith('/admin')) {
+    return NextResponse.next();
+  }
 
-    // For all other admin routes, check authentication
-    if (!adminToken?.value || adminToken.value !== process.env.CURRENT_ADMIN_TOKEN) {
-      return NextResponse.redirect(new URL('/admin/login', request.url));
-    }
+  const isLoginPage = pathname === '/admin/login';
 
-    // Redirect /admin to /admin/dashboard
-    if (pathname === '/admin') {
-      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-    }
+  // Verify the JWT token
+  const isAuthenticated = adminToken?.value ? verifyToken(adminToken.value) : false;
+
+  // Redirect /admin to /admin/dashboard
+  if (pathname === '/admin') {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+  }
+
+  // If on login page and authenticated, redirect to dashboard
+  if (isLoginPage && isAuthenticated) {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+  }
+
+  // If not on login page and not authenticated, redirect to login
+  if (!isLoginPage && !isAuthenticated) {
+    return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
   return NextResponse.next();
+}
+
+// Helper function to verify JWT token
+function verifyToken(token: string): boolean {
+  try {
+    jwt.verify(token, process.env.JWT_SECRET || "fallback_secret");
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export const config = {
