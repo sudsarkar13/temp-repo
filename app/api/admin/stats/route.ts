@@ -1,64 +1,72 @@
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
-import Project from '@/models/project';
-import Message from '@/models/message';
-import { Analytics } from '@/lib/analytics';
+import { Project } from '@/models/Project';
+import { Message } from '@/models/Message';
+import Analytics from '@/models/analytics';
 
 export async function GET(request: Request) {
   try {
-    const token = await getToken({ req: request as any });
-    
-    if (!token?.sub) {
+    // Check auth token from cookie
+    const token = request.cookies.get('admin_token');
+    if (!token) {
       return NextResponse.json(
         { message: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    // Get project stats
-    const [totalProjects, activeProjects] = await Promise.all([
-      Project.countDocuments(),
-      Project.countDocuments({ state: 'published' }),
-    ]);
-
-    // Get message stats
-    const [totalMessages, unreadMessages] = await Promise.all([
-      Message.countDocuments(),
-      Message.countDocuments({ status: 'new' }),
-    ]);
-
-    // Get analytics stats
-    const endDate = new Date();
-    const startDate = new Date(endDate);
-    startDate.setDate(startDate.getDate() - 30); // Last 30 days
-
-    const analytics = await Analytics.aggregate([
-      {
-        $match: {
-          timestamp: { $gte: startDate, $lte: endDate },
-        },
-      },
-      {
-        $group: {
-          _id: '$type',
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-
-    const totalViews = analytics.find(a => a._id === 'pageView')?.count || 0;
-    const totalClicks = analytics.find(a => a._id === 'projectClick')?.count || 0;
-
-    return NextResponse.json({
+    // Get counts
+    const [
       totalProjects,
-      activeProjects,
+      publishedProjects,
       totalMessages,
       unreadMessages,
-      totalViews,
-      totalClicks,
+      totalPageViews,
+      totalProjectViews,
+    ] = await Promise.all([
+      Project.countDocuments(),
+      Project.countDocuments({ status: 'published' }),
+      Message.countDocuments(),
+      Message.countDocuments({ status: 'unread' }),
+      Analytics.countDocuments({ type: 'pageView' }),
+      Analytics.countDocuments({ type: 'projectView' }),
+    ]);
+
+    // Get recent messages
+    const recentMessages = await Message.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('name subject status createdAt');
+
+    // Get top projects
+    const topProjects = await Project.find({ status: 'published' })
+      .sort({ viewCount: -1 })
+      .limit(5)
+      .select('title viewCount');
+
+    return NextResponse.json({
+      counts: {
+        totalProjects,
+        publishedProjects,
+        totalMessages,
+        unreadMessages,
+        totalPageViews,
+        totalProjectViews,
+      },
+      recentMessages: recentMessages.map(msg => ({
+        id: msg._id,
+        name: msg.name,
+        subject: msg.subject,
+        status: msg.status,
+        createdAt: msg.createdAt,
+      })),
+      topProjects: topProjects.map(project => ({
+        id: project._id,
+        title: project.title,
+        views: project.viewCount,
+      })),
     });
   } catch (error) {
-    console.error('Error fetching admin stats:', error);
+    console.error('Stats error:', error);
     return NextResponse.json(
       { message: 'Internal server error' },
       { status: 500 }
