@@ -1,51 +1,29 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { sign } from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const COOKIE_NAME = 'admin_token';
 
 export async function POST(request: Request) {
   try {
     const { passkey } = await request.json();
     
-    if (passkey !== process.env.ADMIN_PASSKEY) {
-      console.log('Invalid passkey attempt');
-      return NextResponse.json(
-        { error: 'Invalid passkey' },
-        { status: 401 }
-      );
+    if (passkey === process.env.ADMIN_PASSKEY) {
+      // Set an HTTP-only cookie for authentication
+      cookies().set('admin_token', process.env.ADMIN_PASSKEY, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path: '/',
+      });
+
+      return NextResponse.json({ success: true });
     }
 
-    // Create JWT token
-    const token = sign(
-      { authorized: true },
-      JWT_SECRET,
-      { expiresIn: '24h' }
-    );
-
-    // Create response with success message
-    const response = NextResponse.json(
-      { success: true },
-      { status: 200 }
-    );
-
-    // Set HTTP-only cookie
-    response.cookies.set({
-      name: COOKIE_NAME,
-      value: token,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 // 24 hours
-    });
-
-    console.log('Login successful, cookie set');
-    return response;
-  } catch (error) {
-    console.error('Auth error:', error);
     return NextResponse.json(
-      { error: 'Authentication failed' },
+      { error: 'Invalid passkey' },
+      { status: 401 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
