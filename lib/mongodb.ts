@@ -1,15 +1,31 @@
 import mongoose from 'mongoose';
 
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+/* eslint-disable no-var */
+declare global {
+  var mongoose: MongooseCache | undefined;
+}
+/* eslint-enable no-var */
+
 const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-let cached = global.mongoose;
+const defaultCache: MongooseCache = {
+  conn: null,
+  promise: null,
+};
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+const cached: MongooseCache = global.mongoose || defaultCache;
+
+if (!global.mongoose) {
+  global.mongoose = cached;
 }
 
 export async function connectDB() {
@@ -29,10 +45,9 @@ export async function connectDB() {
 
   try {
     cached.conn = await cached.promise;
+    return cached.conn;
   } catch (e) {
     cached.promise = null;
     throw e;
   }
-
-  return cached.conn;
-} 
+}
