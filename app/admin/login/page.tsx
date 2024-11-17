@@ -17,7 +17,6 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      console.log('Attempting login...');
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -26,7 +25,6 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
-      console.log('Login response:', data);
 
       if (!res.ok) {
         throw new Error(data.error || 'Authentication failed');
@@ -40,11 +38,8 @@ export default function LoginPage() {
       // Clear form
       setPasskey('');
       
-      // Use setTimeout to ensure toast is visible
-      setTimeout(() => {
-        console.log('Redirecting to admin dashboard...');
-        window.location.href = '/admin';
-      }, 1500);
+      // Force a hard reload and redirect
+      window.location.replace('/admin');
 
     } catch (error) {
       console.error('Login error:', error);
