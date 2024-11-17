@@ -10,14 +10,14 @@ export function middleware(request: NextRequest) {
     // Allow access to login page
     if (pathname === '/admin/login') {
       // If already authenticated, redirect to dashboard
-      if (adminToken?.value === process.env.ADMIN_PASSKEY) {
+      if (adminToken?.value === process.env.CURRENT_ADMIN_TOKEN) {
         return NextResponse.redirect(new URL('/admin/dashboard', request.url));
       }
       return NextResponse.next();
     }
 
     // For all other admin routes, check authentication
-    if (adminToken?.value !== process.env.ADMIN_PASSKEY) {
+    if (!adminToken?.value || adminToken.value !== process.env.CURRENT_ADMIN_TOKEN) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
 
@@ -32,4 +32,4 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: '/admin/:path*',
-}; 
+};
