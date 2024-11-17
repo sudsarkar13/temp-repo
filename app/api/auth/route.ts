@@ -13,21 +13,29 @@ export async function POST(request: Request) {
     }
 
     const token = jwt.sign(
-      { authorized: true },
-      process.env.JWT_SECRET!,
+      { admin: true },
+      process.env.JWT_SECRET || 'fallback_secret',
       { expiresIn: '24h' }
     );
 
-    const response = NextResponse.json({ success: true });
-    response.cookies.set('admin_token', token, {
+    const response = NextResponse.json(
+      { success: true },
+      { status: 200 }
+    );
+
+    response.cookies.set({
+      name: 'admin_token',
+      value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
+      path: '/',
       maxAge: 60 * 60 * 24 // 24 hours
     });
 
     return response;
   } catch (error) {
+    console.error('Auth error:', error);
     return NextResponse.json(
       { error: 'Authentication failed' },
       { status: 500 }
