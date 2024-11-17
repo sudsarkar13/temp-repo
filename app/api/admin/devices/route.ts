@@ -1,10 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import Admin from "@/models/auth";
 
+export const runtime = 'nodejs';
+
 // Get all devices
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const token = (await cookies()).get("admin_token")?.value;
     if (!token) {
