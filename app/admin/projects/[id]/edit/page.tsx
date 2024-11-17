@@ -16,11 +16,13 @@ async function getProject(id: string) {
   }
 }
 
-type Props = {
-  params: { id: string };
+interface Props {
+  params: Promise<{ id: string }>;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const ProjectEditPage = async ({ params }: Props) => {
+export default async function ProjectEditPage(props: Props) {
+  const params = await props.params;
   const project = await getProject(params.id);
 
   if (!project) {
@@ -37,6 +39,4 @@ const ProjectEditPage = async ({ params }: Props) => {
       </div>
     </div>
   );
-};
-
-export default ProjectEditPage;
+}
