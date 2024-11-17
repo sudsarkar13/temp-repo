@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 export interface AdminSession {
-  _id?: Types.ObjectId;
+  _id?: Types.ObjectId | undefined;
   token: string;
   ip: string;
   userAgent: string;
