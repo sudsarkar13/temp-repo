@@ -80,7 +80,7 @@ export async function DELETE(request: NextRequest) {
 
     // Remove the specified session
     admin.sessions = admin.sessions.filter(
-      (session: AdminSession) => session._id.toString() !== sessionId
+      (session: AdminSession) => session._id?.toString() !== sessionId
     );
 
     await admin.save();
