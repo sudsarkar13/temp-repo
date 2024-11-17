@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { format, subDays } from 'date-fns';
 import Analytics from '@/models/analytics';
 import { Project } from '@/models/Project';
 import { Message } from '@/models/Message';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     // Check auth token from cookie
     const token = request.cookies.get('admin_token');
