@@ -4,11 +4,8 @@ import { Project } from '@/models/Project';
 import { connectDB } from '@/lib/db';
 import EditProjectForm from './EditProjectForm';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
+type Props = {
+  params: { id: string }
 }
 
 async function getProject(id: string) {
@@ -23,7 +20,7 @@ async function getProject(id: string) {
   }
 }
 
-export default async function ProjectEditPage({ params }: PageProps) {
+export default async function ProjectEditPage({ params }: Props): Promise<JSX.Element> {
   const project = await getProject(params.id);
 
   if (!project) {
