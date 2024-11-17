@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [passkey, setPasskey] = useState('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,8 +38,13 @@ export default function LoginPage() {
       // Clear form
       setPasskey('');
       
-      // Force a hard reload to ensure middleware picks up the new cookie
-      window.location.href = '/admin';
+      // Use router.push first for smooth transition
+      router.push('/admin/dashboard');
+      
+      // Then force a reload after a short delay to ensure cookie is picked up
+      setTimeout(() => {
+        window.location.href = '/admin/dashboard';
+      }, 100);
 
     } catch (error) {
       console.error('Login error:', error);
