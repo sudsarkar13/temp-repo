@@ -1,7 +1,6 @@
-import { PageProps } from 'next';
-
-export interface EditPageProps extends PageProps {
+export interface EditPageProps {
   params: {
     id: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
