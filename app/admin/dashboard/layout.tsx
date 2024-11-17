@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -13,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { LogoutButton } from '@/components/admin/LogoutButton';
 
 interface NavItemProps {
   href: string;
@@ -100,13 +103,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <Separator className="my-4" />
 
             {/* Logout button */}
-            <Button
-              variant="ghost"
-              className="w-full justify-start gap-2 text-destructive hover:text-destructive hover:bg-destructive/10"
-            >
-              <LogOut className="h-4 w-4" />
-              Logout
-            </Button>
+            <LogoutButton className="w-full justify-start gap-2" />
           </ScrollArea>
         </div>
       </aside>
