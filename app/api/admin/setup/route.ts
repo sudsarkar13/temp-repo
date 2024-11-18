@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken';
-// import jwtDecode from 'jwt-decode';
+import * as jose from 'jose';
 import Admin from "@/models/auth";
 import { connectDB } from "@/lib/mongodb";
+
+// Create a TextEncoder instance
+const encoder = new TextEncoder();
+
+// Convert secret to Uint8Array
+const secret = encoder.encode(process.env.JWT_SECRET || 'fallback_secret');
 
 export async function POST(request: Request) {
   console.log('Admin setup request received');
@@ -99,11 +104,13 @@ export async function POST(request: Request) {
     console.log('Admin account created successfully');
     
     // Create and set JWT token
-    const token = jwt.sign(
-      { id: admin._id, email: admin.email },
-      process.env.JWT_SECRET || "fallback_secret",
-      { expiresIn: '1d' }
-    );
+    const token = await new jose.SignJWT({ 
+      id: admin._id.toString(), 
+      email: admin.email 
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime('1d')
+      .sign(secret);
 
     const response = NextResponse.json({
       message: "Admin account created successfully",
