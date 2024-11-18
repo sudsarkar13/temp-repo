@@ -17,9 +17,7 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  twoFactorSecret: {
-    type: String,
-  },
+  twoFactorSecret: String,
   twoFactorEnabled: {
     type: Boolean,
     default: false,
@@ -66,8 +64,17 @@ adminSchema.pre('save', async function(next) {
 });
 
 // Verify password method
+adminSchema.methods.checkPassword = async function(password: string) {
+  return await bcrypt.compare(password, this.password);
+};
+
 adminSchema.methods.verifyPassword = async function(password: string) {
   return bcrypt.compare(password, this.password);
+};
+
+// Add any static methods here
+adminSchema.statics.findByEmail = function(email: string) {
+  return this.findOne({ email: email.toLowerCase() });
 };
 
 const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
