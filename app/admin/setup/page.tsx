@@ -10,6 +10,15 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Loader2, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Password validation regex
+const passwordRegex = {
+  minLength: /.{8,}/,
+  hasUpperCase: /[A-Z]/,
+  hasLowerCase: /[a-z]/,
+  hasNumber: /\d/,
+  hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/,
+};
+
 export default function AdminSetup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,26 +29,70 @@ export default function AdminSetup() {
   const router = useRouter();
   const { toast } = useToast();
 
+  const validatePassword = (password: string) => {
+    const errors = [];
+    if (!passwordRegex.minLength.test(password)) {
+      errors.push("Password must be at least 8 characters long");
+    }
+    if (!passwordRegex.hasUpperCase.test(password)) {
+      errors.push("Password must contain at least one uppercase letter");
+    }
+    if (!passwordRegex.hasLowerCase.test(password)) {
+      errors.push("Password must contain at least one lowercase letter");
+    }
+    if (!passwordRegex.hasNumber.test(password)) {
+      errors.push("Password must contain at least one number");
+    }
+    if (!passwordRegex.hasSpecialChar.test(password)) {
+      errors.push("Password must contain at least one special character");
+    }
+    return errors;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validate passwords match
-    if (password !== confirmPassword) {
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       toast({
         title: "Error",
-        description: "Passwords do not match",
+        description: "Please enter a valid email address",
         variant: "destructive",
       });
       setIsLoading(false);
       return;
     }
 
-    // Validate password strength
-    if (password.length < 8) {
+    // Validate name
+    if (name.trim().length < 2) {
       toast({
         title: "Error",
-        description: "Password must be at least 8 characters long",
+        description: "Name must be at least 2 characters long",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate password
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      toast({
+        title: "Password Requirements",
+        description: passwordErrors.join("\n"),
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
         variant: "destructive",
       });
       setIsLoading(false);
@@ -160,6 +213,16 @@ export default function AdminSetup() {
                         <Eye className="h-4 w-4" />
                       )}
                     </button>
+                  </div>
+                  <div className="text-xs text-white/50 space-y-1 mt-2">
+                    <p>Password must contain:</p>
+                    <ul className="list-disc list-inside">
+                      <li className={password.length >= 8 ? "text-green-400" : ""}>At least 8 characters</li>
+                      <li className={/[A-Z]/.test(password) ? "text-green-400" : ""}>One uppercase letter</li>
+                      <li className={/[a-z]/.test(password) ? "text-green-400" : ""}>One lowercase letter</li>
+                      <li className={/\d/.test(password) ? "text-green-400" : ""}>One number</li>
+                      <li className={/[!@#$%^&*(),.?":{}|<>]/.test(password) ? "text-green-400" : ""}>One special character</li>
+                    </ul>
                   </div>
                 </div>
                 <div className="space-y-2">
