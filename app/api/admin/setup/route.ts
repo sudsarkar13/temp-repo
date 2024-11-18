@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import Admin from "@/models/auth";
+import { connectDB } from "@/lib/mongodb";
 
 export async function POST(request: Request) {
   try {
+    await connectDB();
+    
     // Check if admin already exists
     const adminExists = await Admin.findOne();
     if (adminExists) {
@@ -39,6 +42,11 @@ export async function POST(request: Request) {
     // Return success
     return NextResponse.json({
       message: "Admin account created successfully",
+      admin: {
+        id: admin._id,
+        email: admin.email,
+        name: admin.name,
+      }
     });
   } catch (error: any) {
     console.error("Admin setup error:", error);
@@ -51,7 +59,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: "Failed to create admin account" },
       { status: 500 }
     );
   }
