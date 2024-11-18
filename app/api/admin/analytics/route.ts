@@ -1,8 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { format, subDays } from 'date-fns';
 import Analytics from '@/models/analytics';
-import { Project } from '@/models/Project';
-import { Message } from '@/models/Message';
 
 export const runtime = 'nodejs';
 
@@ -17,95 +14,74 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const endDate = new Date();
-    const startDate = subDays(endDate, 30); // Last 30 days
+    // Get the last 7 days of analytics data
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    // Get daily page views
-    const pageViews = await Analytics.aggregate([
+    const analyticsData = await Analytics.aggregate([
       {
         $match: {
-          type: 'pageView',
-          timestamp: { $gte: startDate, $lte: endDate },
-        },
+          createdAt: { $gte: sevenDaysAgo },
+          type: { $in: ['pageView', 'projectClick'] }
+        }
       },
       {
         $group: {
-          _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]);
-
-    // Get project views distribution
-    const projectViews = await Analytics.aggregate([
-      {
-        $match: {
-          type: 'projectView',
-          timestamp: { $gte: startDate, $lte: endDate },
-        },
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            type: "$type"
+          },
+          count: { $sum: 1 }
+        }
       },
       {
         $group: {
-          _id: '$projectId',
-          views: { $sum: 1 },
-        },
+          _id: "$_id.date",
+          views: {
+            $sum: {
+              $cond: [{ $eq: ["$_id.type", "pageView"] }, "$count", 0]
+            }
+          },
+          clicks: {
+            $sum: {
+              $cond: [{ $eq: ["$_id.type", "projectClick"] }, "$count", 0]
+            }
+          }
+        }
       },
       {
-        $lookup: {
-          from: 'projects',
-          localField: '_id',
-          foreignField: '_id',
-          as: 'project',
-        },
-      },
-      {
-        $unwind: '$project',
+        $sort: { _id: 1 }
       },
       {
         $project: {
-          title: '$project.title',
+          _id: 0,
+          date: "$_id",
           views: 1,
-        },
-      },
+          clicks: 1
+        }
+      }
     ]);
 
-    // Get message categories
-    const messageCategories = await Message.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: startDate, $lte: endDate },
-        },
-      },
-      {
-        $group: {
-          _id: '$status',
-          count: { $sum: 1 },
-        },
-      },
-    ]);
+    // Fill in missing dates with zero counts
+    const chartData = [];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(sevenDaysAgo);
+      date.setDate(date.getDate() + i);
+      const dateStr = date.toISOString().split('T')[0];
+      
+      const existingData = analyticsData.find(d => d.date === dateStr);
+      chartData.push({
+        date: dateStr,
+        views: existingData?.views || 0,
+        clicks: existingData?.clicks || 0,
+      });
+    }
 
-    // Format data for response
-    const formattedData = {
-      pageViews: pageViews.map(view => ({
-        date: view._id,
-        views: view.count,
-      })),
-      projectViews: projectViews.map(project => ({
-        title: project.title,
-        views: project.views,
-      })),
-      messageCategories: messageCategories.map(category => ({
-        status: category._id,
-        count: category.count,
-      })),
-    };
-
-    return NextResponse.json(formattedData);
+    return NextResponse.json({ chartData });
   } catch (error) {
-    console.error('Analytics error:', error);
+    console.error('Error fetching analytics:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { message: 'Failed to fetch analytics data' },
       { status: 500 }
     );
   }
