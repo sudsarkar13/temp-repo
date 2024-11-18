@@ -3,33 +3,40 @@ import Loading from "@/components/loading/loading";
 import { Project } from "@/types/project";
 import WorkContent from "@/components/work/WorkContent";
 
-// Fetch projects on the server
-async function getProjects(): Promise<Project[]> {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`, {
-      cache: 'no-store'
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch projects');
-    }
-    return response.json();
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    return [];
-  }
-}
+// Mock data for static rendering
+const INITIAL_PROJECTS: Project[] = [
+  {
+    _id: "1",
+    num: "01",
+    category: "Web Development",
+    title: "Portfolio Website",
+    description: "A modern portfolio website built with Next.js and TypeScript",
+    stack: [
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Tailwind CSS" },
+    ],
+    image: "/images/projects/portfolio.jpg",
+    live: "https://example.com",
+    github: "https://github.com/example/portfolio",
+  },
+];
+
+export const dynamic = 'force-dynamic';
 
 export default async function WorkPage() {
-  const projects = await getProjects();
+  let projects: Project[] = INITIAL_PROJECTS;
 
-  if (projects.length === 0) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <h3 className="text-xl font-semibold mb-2">No projects available</h3>
-        </div>
-      </div>
-    );
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/projects`);
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        projects = data;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching projects:', error);
   }
 
   return (
