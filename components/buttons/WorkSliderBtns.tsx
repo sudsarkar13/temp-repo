@@ -16,12 +16,26 @@ const WorkSliderButtons: React.FC<WorkSliderBtnsProps> = ({
   iconStyles = "",
 }) => {
   const swiper = useSwiper();
+
+  if (!swiper) {
+    console.warn('Swiper instance not found');
+    return null;
+  }
+
   return (
     <div className={containerStyles}>
-      <button className={btnStyles} onClick={() => swiper.slidePrev()}>
+      <button 
+        className={btnStyles} 
+        onClick={() => swiper.slidePrev()}
+        aria-label="Previous slide"
+      >
         <PiCaretLeftBold className={iconStyles} />
       </button>
-      <button className={btnStyles} onClick={() => swiper.slideNext()}>
+      <button 
+        className={btnStyles} 
+        onClick={() => swiper.slideNext()}
+        aria-label="Next slide"
+      >
         <PiCaretRightBold className={iconStyles} />
       </button>
     </div>
@@ -29,11 +43,16 @@ const WorkSliderButtons: React.FC<WorkSliderBtnsProps> = ({
 };
 
 const WorkSliderBtns: React.FC<WorkSliderBtnsProps> = (props) => {
-  return (
-    <div className="swiper-buttons">
-      <WorkSliderButtons {...props} />
-    </div>
-  );
+  try {
+    return (
+      <div className="swiper-buttons">
+        <WorkSliderButtons {...props} />
+      </div>
+    );
+  } catch (error) {
+    console.error('Error rendering slider buttons:', error);
+    return null;
+  }
 };
 
 export default WorkSliderBtns;
