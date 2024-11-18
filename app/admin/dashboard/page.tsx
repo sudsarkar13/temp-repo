@@ -6,17 +6,29 @@ import DashboardOverview from '@/components/admin/DashboardOverview';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
+const defaultStats = {
+  totalProjects: 0,
+  activeProjects: 0,
+  totalMessages: 0,
+  unreadMessages: 0,
+  totalViews: 0,
+  totalClicks: 0,
+};
+
+const defaultChartData = Array.from({ length: 7 }, (_, i) => {
+  const date = new Date();
+  date.setDate(date.getDate() - (6 - i));
+  return {
+    date: date.toISOString().split('T')[0],
+    views: 0,
+    clicks: 0,
+  };
+});
+
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
-  const [stats, setStats] = useState({
-    totalProjects: 0,
-    activeProjects: 0,
-    totalMessages: 0,
-    unreadMessages: 0,
-    totalViews: 0,
-    totalClicks: 0,
-  });
-  const [chartData, setChartData] = useState<any[]>([]);
+  const [stats, setStats] = useState(defaultStats);
+  const [chartData, setChartData] = useState(defaultChartData);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -24,25 +36,35 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         // Fetch stats
-        const statsRes = await fetch('/api/admin/stats');
-        const statsData = await statsRes.json();
+        const [statsRes, analyticsRes] = await Promise.all([
+          fetch('/api/admin/stats'),
+          fetch('/api/admin/analytics')
+        ]);
 
-        if (!statsRes.ok) throw new Error(statsData.message);
+        if (!statsRes.ok) {
+          throw new Error('Failed to fetch stats');
+        }
 
-        // Fetch analytics data
-        const analyticsRes = await fetch('/api/admin/analytics');
-        const analyticsData = await analyticsRes.json();
+        if (!analyticsRes.ok) {
+          throw new Error('Failed to fetch analytics');
+        }
 
-        if (!analyticsRes.ok) throw new Error(analyticsData.message);
+        const [statsData, analyticsData] = await Promise.all([
+          statsRes.json(),
+          analyticsRes.json()
+        ]);
 
         setStats(statsData);
         setChartData(analyticsData.chartData);
       } catch (error) {
+        console.error('Dashboard data error:', error);
         toast({
           title: 'Error',
           description: 'Failed to load dashboard data',
           variant: 'destructive',
         });
+        setStats(defaultStats);
+        setChartData(defaultChartData);
       } finally {
         setIsLoading(false);
       }
@@ -53,28 +75,16 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-32" />
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-[120px] w-full" />
           ))}
         </div>
-        <Skeleton className="h-[300px]" />
-        <div className="grid gap-4 md:grid-cols-2">
-          {[...Array(2)].map((_, i) => (
-            <Skeleton key={i} className="h-[300px]" />
-          ))}
-        </div>
+        <Skeleton className="h-[400px] w-full" />
       </div>
     );
   }
 
-  return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
-      </div>
-      <DashboardOverview stats={stats} chartData={chartData} />
-    </div>
-  );
+  return <DashboardOverview stats={stats} chartData={chartData} />;
 }
