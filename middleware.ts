@@ -23,14 +23,19 @@ export async function middleware(request: NextRequest) {
   if (pathname === '/admin/setup') {
     try {
       // Check if admin exists by making an API call
-      const response = await fetch(new URL('/api/admin/check', request.url));
-      const { hasAdmin } = await response.json();
+      const baseUrl = request.nextUrl.origin;
+      const response = await fetch(`${baseUrl}/api/admin/check`);
+      const data = await response.json();
 
-      if (hasAdmin) {
+      if (data.hasAdmin) {
+        console.log('Admin exists, checking token...');
         const adminToken = request.cookies.get('admin_token');
         if (!adminToken?.value || !(await verifyToken(adminToken.value))) {
+          console.log('No valid token, redirecting to login');
           return NextResponse.redirect(new URL('/admin/login', request.url));
         }
+      } else {
+        console.log('No admin exists, allowing setup access');
       }
       return NextResponse.next();
     } catch (error) {
