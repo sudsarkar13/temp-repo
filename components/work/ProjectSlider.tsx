@@ -1,24 +1,32 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import WorkSliderBtns from "@/components/buttons/WorkSliderBtns";
 import { Project } from '@/types/project';
+import { motion } from "framer-motion";
 
 interface ProjectSliderProps {
   projects: Project[];
-  onSlideChange: (index: number) => void;
+  onSlideChange?: (index: number) => void;
 }
 
 const ProjectSlider: React.FC<ProjectSliderProps> = ({ projects, onSlideChange }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const handleSlideChange = (swiper: any) => {
-    onSlideChange(swiper.activeIndex);
+    setCurrentIndex(swiper.activeIndex);
+    onSlideChange?.(swiper.activeIndex);
   };
 
   return (
-    <div className={`relative h-[300px] xl:h-[460px]`}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className={`relative h-[300px] xl:h-[460px]`}>
       <Swiper
         onSlideChange={handleSlideChange}
         className={`h-full relative`}
@@ -46,7 +54,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projects, onSlideChange }
           />
         </div>
       </Swiper>
-    </div>
+    </motion.div>
   );
 };
 
