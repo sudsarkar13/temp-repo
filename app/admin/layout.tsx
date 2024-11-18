@@ -20,6 +20,9 @@ const navItems = [
   { href: "/admin/messages", label: "Messages" },
 ];
 
+// Public routes that don't require auth verification
+const publicRoutes = ['/admin/login', '/admin/setup'];
+
 export default function AdminLayout({
   children,
 }: {
@@ -30,12 +33,12 @@ export default function AdminLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Don't check auth for login page
-  const isLoginPage = pathname === '/admin/login';
+  // Skip auth check for public routes
+  const isPublicRoute = publicRoutes.includes(pathname);
   
   useEffect(() => {
-    if (isLoginPage) {
-      return; // Skip auth check on login page
+    if (isPublicRoute) {
+      return; // Skip auth check on public routes
     }
 
     const checkAuth = async () => {
@@ -52,84 +55,79 @@ export default function AdminLayout({
           router.push('/admin/login');
         }
       } catch (error) {
+        console.error('Auth check failed:', error);
         setIsLoggedIn(false);
         router.push('/admin/login');
       }
     };
 
     checkAuth();
-  }, [router, isLoginPage]);
+  }, [pathname, router, isPublicRoute]);
 
-  // Return only children for login page
-  if (isLoginPage) {
+  // For public routes, render without nav
+  if (isPublicRoute) {
     return <>{children}</>;
   }
 
-  // Return loading or null while checking auth
+  // For protected routes that are not yet authenticated, render nothing
+  // This prevents flash of content before redirect
   if (!isLoggedIn) {
     return null;
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Mobile Navigation */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 p-4 border-b bg-background z-50">
+    <div className="min-h-screen bg-[#1C1C1C] text-white">
+      {/* Mobile navigation */}
+      <div className="block lg:hidden fixed top-4 right-4 z-50">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="outline" size="icon">
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-64 bg-primary">
+          <SheetContent className="w-[300px] bg-[#27272C] border-none">
             <SheetHeader>
-              <SheetTitle className="text-white">Admin Dashboard</SheetTitle>
+              <SheetTitle className="text-white">Menu</SheetTitle>
             </SheetHeader>
-            <div className="flex flex-col gap-4 mt-8">
+            <nav className="flex flex-col gap-4 mt-8">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
+                  className={`text-lg ${
+                    pathname === item.href ? 'text-accent' : 'text-white'
+                  } hover:text-accent transition-colors`}
                   onClick={() => setOpen(false)}
-                  className="px-4 py-2 text-sm text-white hover:bg-primary/80 rounded-md"
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="mt-auto pt-4">
-                <LogoutButton />
-              </div>
-            </div>
+              <LogoutButton className="mt-4" />
+            </nav>
           </SheetContent>
         </Sheet>
       </div>
 
-      {/* Desktop Navigation */}
-      <div className="hidden lg:block fixed top-0 left-0 bottom-0 w-64 border-r bg-background">
-        <div className="flex flex-col h-full p-4">
-          <h2 className="text-lg font-semibold px-4 mb-8">Admin Dashboard</h2>
-          <div className="space-y-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center px-4 py-2 text-sm hover:bg-accent rounded-md"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-          <div className="mt-auto pt-4">
-            <LogoutButton />
-          </div>
-        </div>
+      {/* Desktop navigation */}
+      <div className="hidden lg:flex justify-between items-center p-8 max-w-7xl mx-auto">
+        <nav className="flex gap-8">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`text-lg ${
+                pathname === item.href ? 'text-accent' : 'text-white'
+              } hover:text-accent transition-colors`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <LogoutButton />
       </div>
 
-      {/* Main Content */}
-      <div className="lg:pl-64 pt-16 lg:pt-0">
-        <main className="p-4 lg:p-8">
-          {children}
-        </main>
-      </div>
+      {/* Main content */}
+      <main className="p-8 max-w-7xl mx-auto">{children}</main>
     </div>
   );
-} 
+}
