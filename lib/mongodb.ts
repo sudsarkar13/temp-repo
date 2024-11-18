@@ -17,6 +17,19 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
+// Add event listeners for MongoDB connection
+mongoose.connection.on('connected', () => {
+  console.log('MongoDB connected successfully');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
+
 const defaultCache: MongooseCache = {
   conn: null,
   promise: null,
@@ -36,23 +49,34 @@ export async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+      serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 30000,
       connectTimeoutMS: 30000,
       maxPoolSize: 10,
+      retryWrites: true,
+      w: 'majority',
+      dbName: 'portfolio', // Specify the database name
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      mongoose.set('strictQuery', true);
-      return mongoose;
-    });
+    try {
+      cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+        console.log('MongoDB connection initialized');
+        mongoose.set('strictQuery', true);
+        return mongoose;
+      });
+    } catch (error) {
+      cached.promise = null;
+      console.error('Failed to initialize MongoDB connection:', error);
+      throw error;
+    }
   }
 
   try {
     cached.conn = await cached.promise;
     return cached.conn;
-  } catch (e) {
+  } catch (error) {
     cached.promise = null;
-    throw e;
+    console.error('Failed to establish MongoDB connection:', error);
+    throw error;
   }
 }
