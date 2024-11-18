@@ -19,58 +19,32 @@ export async function GET(request: NextRequest) {
     // Get counts
     const [
       totalProjects,
-      publishedProjects,
+      activeProjects,
       totalMessages,
       unreadMessages,
-      totalPageViews,
-      totalProjectViews,
+      totalViews,
+      totalClicks,
     ] = await Promise.all([
       Project.countDocuments(),
       Project.countDocuments({ status: 'published' }),
       Message.countDocuments(),
       Message.countDocuments({ status: 'unread' }),
       Analytics.countDocuments({ type: 'pageView' }),
-      Analytics.countDocuments({ type: 'projectView' }),
+      Analytics.countDocuments({ type: 'projectClick' }),
     ]);
 
-    // Get recent messages
-    const recentMessages = await Message.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select('name subject status createdAt');
-
-    // Get top projects
-    const topProjects = await Project.find({ status: 'published' })
-      .sort({ viewCount: -1 })
-      .limit(5)
-      .select('title viewCount');
-
     return NextResponse.json({
-      counts: {
-        totalProjects,
-        publishedProjects,
-        totalMessages,
-        unreadMessages,
-        totalPageViews,
-        totalProjectViews,
-      },
-      recentMessages: recentMessages.map(msg => ({
-        id: msg._id,
-        name: msg.name,
-        subject: msg.subject,
-        status: msg.status,
-        createdAt: msg.createdAt,
-      })),
-      topProjects: topProjects.map(project => ({
-        id: project._id,
-        title: project.title,
-        views: project.viewCount,
-      })),
+      totalProjects,
+      activeProjects,
+      totalMessages,
+      unreadMessages,
+      totalViews,
+      totalClicks,
     });
   } catch (error) {
-    console.error('Stats error:', error);
+    console.error('Error fetching stats:', error);
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { message: 'Failed to fetch stats' },
       { status: 500 }
     );
   }
