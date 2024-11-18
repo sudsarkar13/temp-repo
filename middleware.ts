@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
+
+// Admin Schema for middleware checks
+const adminSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+});
 
 // Define public routes that don't require authentication
 const publicRoutes = ['/admin/login', '/admin/setup'];
@@ -11,6 +19,42 @@ export async function middleware(request: NextRequest) {
   // Skip middleware for non-admin routes
   if (!pathname.startsWith('/admin')) {
     return NextResponse.next();
+  }
+
+  // Special handling for admin setup
+  if (pathname === '/admin/setup') {
+    try {
+      // Connect to MongoDB and check if admin exists
+      const MONGODB_URI = process.env.MONGODB_URI!;
+      if (!mongoose.connections[0].readyState) {
+        await mongoose.connect(MONGODB_URI, {
+          bufferCommands: false,
+          serverSelectionTimeoutMS: 30000,
+          socketTimeoutMS: 30000,
+          connectTimeoutMS: 30000,
+        });
+      }
+      
+      // Get or create Admin model
+      const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
+      
+      // Check if any admin exists
+      const adminExists = await Admin.findOne().lean();
+      
+      if (adminExists) {
+        console.log('Admin exists, redirecting to login');
+        const adminToken = request.cookies.get('admin_token');
+        if (!adminToken?.value || !verifyToken(adminToken.value)) {
+          return NextResponse.redirect(new URL('/admin/login', request.url));
+        }
+      } else {
+        console.log('No admin exists, allowing setup access');
+      }
+      return NextResponse.next();
+    } catch (error) {
+      console.error('Error checking admin existence:', error);
+      return NextResponse.next(); // Allow access to setup page if DB check fails
+    }
   }
 
   // Check if it's a public route
