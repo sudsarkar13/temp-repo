@@ -47,15 +47,16 @@ export async function connectDB() {
   }
 
   if (!cached.promise) {
-    const opts = {
+    const opts: mongoose.ConnectOptions = {
       bufferCommands: false,
       serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 30000,
       connectTimeoutMS: 30000,
       maxPoolSize: 10,
       retryWrites: true,
-      w: 'majority',
-      dbName: 'portfolio', // Specify the database name
+      writeConcern: {
+        w: 'majority'
+      }
     };
 
     try {
