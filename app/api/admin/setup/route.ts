@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
+// import jwtDecode from 'jwt-decode';
 import Admin from "@/models/auth";
 import { connectDB } from "@/lib/mongodb";
 
@@ -79,20 +81,31 @@ export async function POST(request: Request) {
       );
     }
 
+    // Hash password
+    console.log('Hashing password...');
+    const hashedPassword = await bcrypt.hash(password, 12);
+
     console.log('Creating admin account...');
     // Create admin
     const admin = await Admin.create({
       email: email.toLowerCase().trim(),
       name: name.trim(),
-      password,
+      password: hashedPassword,
       twoFactorEnabled: false,
       sessions: [],
       createdAt: new Date(),
     });
 
     console.log('Admin account created successfully');
-    // Return success
-    return NextResponse.json({
+    
+    // Create and set JWT token
+    const token = jwt.sign(
+      { id: admin._id, email: admin.email },
+      process.env.JWT_SECRET || "fallback_secret",
+      { expiresIn: '1d' }
+    );
+
+    const response = NextResponse.json({
       message: "Admin account created successfully",
       admin: {
         id: admin._id,
@@ -100,6 +113,18 @@ export async function POST(request: Request) {
         name: admin.name,
       }
     });
+
+    // Set the token cookie
+    response.cookies.set({
+      name: 'admin_token',
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24, // 1 day
+    });
+
+    return response;
   } catch (error: any) {
     console.error("Admin setup error:", error);
 
