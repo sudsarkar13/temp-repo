@@ -1,0 +1,84 @@
+"use client";
+
+import React from "react";
+import { ArrowDownRight } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+
+const services = [
+	{
+		id: 1,
+		num: "01",
+		title: "Web Development",
+		description: "I develop sites using Next.js and Tailwind CSS.",
+		href: "",
+	},
+	{
+		id: 2,
+		num: "02",
+		title: "UI/UX Design",
+		description: "I design user interfaces and experiences.",
+		href: "",
+	},
+	{
+		id: 3,
+		num: "03",
+		title: "SEO Optimization",
+		description: "I optimize websites for search engines.",
+		href: "",
+	},
+	{
+		id: 4,
+		num: "04",
+		title: "Consultation",
+		description: "I provide consultation services for businesses.",
+		href: "",
+	},
+];
+
+const ServicesPage: React.FC = () => {
+	return (
+		<main>
+			<section
+				className={`min-h-[80vh] flex flex-col justify-center py-12 xl:py-0`}>
+				<div className={`container mx-auto`}>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{
+							opacity: 1,
+							transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+						}}
+						className={`grid grid-cols-1 lg:grid-cols-2 gap-5 xl:gap-[60px] `}>
+						{services.map((service, index) => {
+							return (
+								<div
+									key={index}
+									className={`flex-1 flex flex-col justify-center gap-6 group`}>
+									{/* top */}
+									<div className={`w-full flex justify-between items-center`}>
+										<div className={`text-5xl font-extrabold text-outline text-transparent group-hover:text-outline-hover transition-all duration-500`}>
+											{service.num}
+										</div>
+										<Link href={service.href} className={`w-[70px] h-[70px] rounded-full bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center hover:-rotate-45`}>
+											<ArrowDownRight className={`text-primary text-3xl`} />
+										</Link>
+									</div>
+									{/* title */}
+									<h2 className={`text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500`}>
+										{service.title}
+									</h2>
+									{/* description */}
+									<p className={`text-white/60`}>{service.description}</p>
+									{/* border */}
+									<div className={`border-b border-white/20 w-full`}></div>
+								</div>
+							);
+						})}
+					</motion.div>
+				</div>
+			</section>
+		</main>
+	);
+};
+
+export default ServicesPage;
